@@ -2,13 +2,20 @@
 
 import { redirect } from "next/navigation";
 
+import { isSupabaseConfigured, siteUrl } from "@/lib/env";
 import { createClient } from "@/lib/supabase/server";
-import { siteUrl } from "@/lib/env";
 
 export async function sendMagicLink(formData: FormData) {
   const email = String(formData.get("email") ?? "").trim().toLowerCase();
   if (!email.includes("@")) {
     return { ok: false as const, error: "Inserisci un indirizzo email valido." };
+  }
+
+  if (!isSupabaseConfigured()) {
+    return {
+      ok: false as const,
+      error: "Supabase non configurato in questo ambiente (variabili NEXT_PUBLIC_*).",
+    };
   }
 
   const supabase = await createClient();
