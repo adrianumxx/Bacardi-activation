@@ -69,6 +69,21 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        display: ["var(--font-landing-display)", "ui-serif", "Georgia", "serif"],
+      },
+      keyframes: {
+        "landing-in": {
+          "0%": { opacity: "0", transform: "translateY(20px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        "landing-fade": {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+      },
+      animation: {
+        "landing-in": "landing-in 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards",
+        "landing-fade": "landing-fade 1s ease-out forwards",
       },
     },
   },
