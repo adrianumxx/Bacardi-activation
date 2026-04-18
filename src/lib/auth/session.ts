@@ -6,7 +6,7 @@ import { createClient } from "@/lib/supabase/server";
 import type { UserRole } from "@/types/database";
 
 export async function requireUser() {
-  const locale = await getLocale();
+  const locale = getLocale();
   if (!isSupabaseConfigured()) redirect(localizedPath("/configurazione", locale));
   const supabase = await createClient();
   const {
@@ -39,7 +39,7 @@ export async function getProfileForUser(userId: string) {
 export async function requireAdmin() {
   const user = await requireUser();
   const profile = await getProfileForUser(user.id);
-  const locale = await getLocale();
-  if (profile?.role !== "admin") redirect(localizedPath("/activations", locale));
+  const locale = getLocale();
+  if (!profile || profile.role !== "admin") redirect(localizedPath("/activations", locale));
   return { user, profile, role: profile.role as UserRole };
 }

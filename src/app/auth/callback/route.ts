@@ -3,6 +3,7 @@ import { type NextRequest, NextResponse } from "next/server";
 
 import { DEFAULT_LOCALE, LOCALES, type AppLocale } from "@/i18n/config";
 import type { Database } from "@/types/database";
+import { sanitizePostLoginRedirect } from "@/lib/auth/post-login-redirect";
 import { getPublicEnvSafe } from "@/lib/env";
 import { localePath } from "@/lib/i18n/paths";
 
@@ -24,6 +25,12 @@ function withLocalePrefix(path: string): string {
   return localePath(DEFAULT_LOCALE, normalized);
 }
 
+function localeFromPrefixedPath(prefixed: string): AppLocale {
+  const seg = prefixed.split("/")[1];
+  if (seg && LOCALES.includes(seg as AppLocale)) return seg as AppLocale;
+  return DEFAULT_LOCALE;
+}
+
 /**
  * PKCE / OAuth: i cookie di sessione devono essere applicati alla Response del redirect.
  * `next` viene normalizzato con prefisso lingua se mancante.
@@ -40,13 +47,15 @@ export async function GET(request: NextRequest) {
   const nextRaw = url.searchParams.get("next") ?? "/activations";
   const nextClean =
     nextRaw.startsWith("/") && !nextRaw.startsWith("//") ? nextRaw : "/activations";
-  const next = withLocalePrefix(nextClean);
+  const nextPrefixed = withLocalePrefix(nextClean);
+  const locale = localeFromPrefixedPath(nextPrefixed);
+  const safeNext = sanitizePostLoginRedirect(locale, nextPrefixed);
 
   if (!code) {
     return NextResponse.redirect(new URL(withLocalePrefix("/login?error=auth"), origin));
   }
 
-  const redirectUrl = new URL(next, origin);
+  const redirectUrl = new URL(safeNext, origin);
   const response = NextResponse.redirect(redirectUrl);
 
   try {

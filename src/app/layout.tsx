@@ -3,6 +3,7 @@ import { DM_Sans, Montserrat, Playfair_Display } from "next/font/google";
 
 import "./globals.css";
 import { Providers } from "@/components/providers";
+import { DEFAULT_LOCALE } from "@/i18n/config";
 import { siteUrl } from "@/lib/env";
 import { cn } from "@/lib/utils";
 
@@ -48,7 +49,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="nl" className="dark" suppressHydrationWarning>
+    <html lang={DEFAULT_LOCALE} className="dark" suppressHydrationWarning>
       <body
         className={cn(
           "min-h-dvh bg-background text-foreground",
