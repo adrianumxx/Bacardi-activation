@@ -9,6 +9,25 @@ Collegare la CLI al progetto remoto (una tantum, dal tuo PC):
    npx supabase link --project-ref klxbudllpuushacalihi
 
 4) Per applicare le migrazioni sul remoto (dopo il link):
-   npx supabase db push
+   npm run db:remote:push
+   (oppure: npx supabase db push)
 
-In alternativa senza CLI: SQL Editor → incolla i file in supabase/migrations/ e supabase/scripts/ensure_public_catalog_anon.sql nell’ordine indicato nella guida.
+5) Verifica migrazioni applicate:
+   npm run db:remote:status
+
+---
+
+Senza CLI (solo SQL Editor), ordine consigliato:
+
+  a) supabase/migrations/20250418000000_init.sql          — schema + RLS base (solo DB vuoto o la prima volta)
+  b) supabase/migrations/20250418120000_anon_read_catalog.sql
+  c) supabase/migrations/20250418140000_anon_select_grants.sql
+
+Oppure, se (a) è già applicato e vuoi solo sistemare catalogo pubblico:
+
+  supabase/scripts/ensure_public_catalog_anon.sql         — grant + policy anon (idempotente)
+
+---
+
+Nota: in supabase/config.toml, [db].major_version deve coincidere con la versione Postgres del progetto remoto
+(SQL Editor → select version();). Se db push fallisce per versione, allinea major_version e riprova.

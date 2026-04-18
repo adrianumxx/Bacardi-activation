@@ -8,7 +8,10 @@
     "start": "next start",
     "lint": "next lint",
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "supabase": "npx supabase",
+    "db:remote:push": "npx supabase db push",
+    "db:remote:status": "npx supabase migration list"
   },
   "dependencies": {
     "@base-ui/react": "^1.4.0",

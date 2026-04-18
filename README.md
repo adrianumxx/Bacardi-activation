@@ -21,7 +21,19 @@ Poi fai **Redeploy**. Se mancano, l’app reindirizza a `/configurazione` invece
 
 ## Setup locale
 
-1. Crea un progetto su [Supabase](https://supabase.com) ed esegui la migrazione SQL in `supabase/migrations/20250418000000_init.sql` (SQL editor o CLI Supabase).
+### Opzione A — Supabase CLI (consigliato dopo il primo login)
+
+1. Genera un **Access Token** (Dashboard Supabase → Account → Access Tokens).
+2. Nella root del repo: `npx supabase login --token "..."` poi `npx supabase link --project-ref <ref>` (vedi anche `supabase/LINK.txt`).
+3. Applica le migrazioni remote: `npm run db:remote:push` (equivalente a `supabase db push`).
+
+### Opzione B — Solo SQL Editor
+
+Esegui nell’ordine i file in `supabase/migrations/` (vedi ordine dettagliato in `supabase/LINK.txt`). Per il **catalogo senza login**, usa anche `supabase/scripts/ensure_public_catalog_anon.sql` se mancano grant/policy `anon`.
+
+### Variabili e Auth
+
+1. Crea un progetto su [Supabase](https://supabase.com) e collega l’app con URL + anon key in `.env.local` (vedi `.env.example`).
 
 2. In Supabase Authentication → URL configuration, imposta:
 
@@ -63,6 +75,7 @@ npm run lint
 npm run typecheck
 npm test
 npm run build
+npm run db:remote:push   # dopo supabase login + link (vedi supabase/LINK.txt)
 ```
 
 ## Note brand
