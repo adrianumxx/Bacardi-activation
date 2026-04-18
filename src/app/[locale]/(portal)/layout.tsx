@@ -37,7 +37,7 @@ export default async function PortalShellLayout({
                 <span className="text-[0.55rem] font-semibold uppercase tracking-[0.22em] text-neutral-300 sm:text-[0.58rem]">
                   {nav.portalEyebrow}
                 </span>
-                <BacardiWordmarkLockup text={nav.brandName} className="text-lg sm:text-xl" />
+                <BacardiWordmarkLockup text={nav.brandName} className="h-6 w-auto sm:h-7" />
               </div>
             </Link>
             <Separator orientation="vertical" className="hidden h-9 sm:block" />

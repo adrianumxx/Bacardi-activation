@@ -1,21 +1,25 @@
 import { cn } from "@/lib/utils";
 
-/** Wordmark tipografico BACARDÍ + ® (stile lockup consumer, carbone su nero + alone leggibilità). */
+const WORDMARK_SRC = "/brand/bacardi-wordmark.svg";
+
+/**
+ * Wordmark ufficiale BACARDÍ + ® come SVG in `public/brand/` (bianco su trasparente).
+ * Non sostituire con testo generico: coerenza con il marchio e resa identica ovunque.
+ */
 export function BacardiWordmarkLockup({ text, className }: { text: string; className?: string }) {
   return (
-    <span
+    // eslint-disable-next-line @next/next/no-img-element -- SVG locale, stesso motivo del bollino
+    <img
+      src={WORDMARK_SRC}
+      width={200}
+      height={36}
+      alt={text}
+      decoding="async"
       className={cn(
-        "font-display font-extrabold uppercase tracking-tight text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.55)] transition-[filter] duration-200 will-change-[filter] group-hover:brightness-110",
+        "inline-block h-8 w-auto max-w-full origin-left object-contain object-left select-none",
+        "motion-safe:transition-[filter] motion-safe:duration-200 motion-safe:group-hover:brightness-110",
         className,
       )}
-    >
-      {text}
-      <sup
-        className="ml-0.5 align-super text-[0.45em] font-semibold tracking-normal text-white/75 no-underline"
-        aria-hidden
-      >
-        ®
-      </sup>
-    </span>
+    />
   );
 }

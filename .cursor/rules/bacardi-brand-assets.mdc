@@ -1,0 +1,12 @@
+---
+description: Asset marchio BACARDÍ ufficiali in UI (bollino + wordmark).
+globs: "**/*.{tsx,ts,svg}"
+alwaysApply: true
+---
+
+# Marchio BACARDÍ
+
+- **Bollino (pipistrello nel sigillo):** sempre `BacardiMark` → file `public/brand/bacardi-bollino.svg` (caricato con `<img>`, non `next/image` per gli SVG).
+- **Wordmark BACARDÍ + ®:** sempre `BacardiWordmarkLockup` → file `public/brand/bacardi-wordmark.svg` (bianco su trasparente).
+- Non sostituire con testo CSS generico, placeholder generici o altre immagini salvo richiesta esplicita del cliente.
+- Se serve una variante (es. wordmark su fondo chiaro), aggiungere un **nuovo** asset in `public/brand/` e un componente dedicato, senza rimuovere i file canonici sopra.

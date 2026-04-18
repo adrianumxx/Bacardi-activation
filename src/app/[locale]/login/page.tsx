@@ -65,7 +65,7 @@ export default async function LoginPage({
           <span className="text-[0.65rem] font-semibold uppercase tracking-[0.28em] text-muted-foreground transition-colors group-hover:text-foreground">
             {dict.landing.portalEyebrow}
           </span>
-          <BacardiWordmarkLockup text={dict.landing.brandName} className="text-2xl tracking-tight" />
+          <BacardiWordmarkLockup text={dict.landing.brandName} className="h-9 w-auto sm:h-10" />
         </Link>
         <LocaleDashSwitcher locale={locale} copy={dict.localeSwitcher} variant="compact" />
       </header>

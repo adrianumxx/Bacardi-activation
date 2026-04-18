@@ -58,7 +58,7 @@ export function BacardiLanding({ className, isAuthenticated, locale, dict }: Bac
             <span className="text-[0.65rem] font-semibold uppercase tracking-[0.28em] text-neutral-300 transition-colors group-hover:text-neutral-100">
               {L.portalEyebrow}
             </span>
-            <BacardiWordmarkLockup text={L.brandName} className="text-2xl sm:text-3xl" />
+            <BacardiWordmarkLockup text={L.brandName} className="h-9 w-auto sm:h-11" />
           </div>
         </Link>
         <div className="flex w-full flex-col gap-3 sm:w-auto sm:max-w-[min(100%,28rem)] sm:items-end">

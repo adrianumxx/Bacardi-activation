@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 88" fill="none" role="img" aria-labelledby="wmTitle">
+  <title id="wmTitle">BACARDI wordmark</title>
+  <text
+    x="0"
+    y="66"
+    fill="#ffffff"
+    font-family="system-ui, 'Arial Black', 'Helvetica Neue', Arial, sans-serif"
+    font-size="62"
+    font-weight="900"
+    letter-spacing="0.04em"
+  >
+    BACARD&#x00CD;
+  </text>
+  <text
+    x="378"
+    y="30"
+    fill="#ffffff"
+    font-family="system-ui, 'Helvetica Neue', Arial, sans-serif"
+    font-size="20"
+    font-weight="700"
+  >
+    &#x00AE;
+  </text>
+</svg>

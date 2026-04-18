@@ -1,17 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none" aria-hidden="true">
-  <title>BACARDÍ — bollino</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none" role="img" aria-labelledby="bollinoTitle">
+  <title id="bollinoTitle">BACARDI bollino marchio</title>
+  <!-- Anelli esterni (bianco / nero / bianco / nero) -->
   <circle cx="256" cy="256" r="250" fill="#ffffff" />
   <circle cx="256" cy="256" r="236" fill="#0a0a0a" />
   <circle cx="256" cy="256" r="222" fill="#ffffff" />
-  <circle cx="256" cy="256" r="204" fill="#d91e27" />
+  <circle cx="256" cy="256" r="206" fill="#0a0a0a" />
+  <!-- Campo rosso interno -->
+  <circle cx="256" cy="256" r="190" fill="#d91e27" />
+  <!-- Testi curvi (stile sigillo) -->
+  <defs>
+    <path id="bollinoArcTop" d="M 92 248 A 200 148 0 0 1 420 248" />
+    <path id="bollinoArcBottom" d="M 420 292 A 200 148 0 0 1 92 292" />
+  </defs>
+  <text fill="#0a0a0a" font-family="system-ui, 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif" font-size="26" font-weight="800" letter-spacing="0.14em">
+    <textPath href="#bollinoArcTop" startOffset="50%" text-anchor="middle">BACARD&#x00CD;</textPath>
+  </text>
+  <text fill="#0a0a0a" font-family="system-ui, 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="0.1em">
+    <textPath href="#bollinoArcBottom" startOffset="50%" text-anchor="middle">MARCA DE F&#x00C1;BRICA</textPath>
+  </text>
+  <!-- Pipistrello (silhouette stilizzata, contrasto su rosso) -->
   <g fill="#0a0a0a">
-    <ellipse cx="256" cy="278" rx="36" ry="54" />
+    <ellipse cx="256" cy="292" rx="34" ry="50" opacity="0.98" />
     <path
-      d="M256 176c-52 10-98 48-118 102 22-8 44-12 66-12 24 0 46 8 52 20 6-12 28-20 52-20 22 0 44 4 66 12-20-54-66-92-118-102Z"
+      d="M256 168c-54 12-102 52-122 110 24-8 48-12 72-12 26 0 50 8 56 22 6-14 30-22 56-22 24 0 48 4 72 12-20-58-68-98-122-110Z"
       opacity="0.96"
     />
     <path
-      d="M132 292c-40 32-62 78-52 110 28-36 72-62 116-70-28-20-48-32-64-40Zm248 0c16 8 36 20 64 40 44 8 88 34 116 70 10-32-12-78-52-110Z"
+      d="M118 300c-42 34-64 82-54 116 30-38 76-66 122-74-28-22-48-34-68-42Zm276 0c20 8 40 20 68 42 46 8 92 36 122 74 10-34-12-82-54-116Z"
+    />
+    <path
+      d="M178 232c-18 28-28 60-26 92 36-22 74-36 104-40-22-18-48-34-78-52Zm156 0c-30 18-56 34-78 52 30 4 68 18 104 40 2-32-8-64-26-92Z"
+      opacity="0.92"
     />
   </g>
 </svg>
