@@ -38,6 +38,25 @@ export default function ConfigurazionePage() {
         Next.js le incorpora nel build.
       </p>
 
+      <div className="mt-8 rounded-lg border border-amber-500/40 bg-amber-500/10 p-4 text-sm text-foreground">
+        <p className="font-medium">Controlli frequenti</p>
+        <ul className="mt-2 list-disc space-y-1 pl-4 text-muted-foreground">
+          <li>
+            Su Vercel le variabili devono essere abilitate per{" "}
+            <strong className="text-foreground">Production</strong> (non solo Preview).
+          </li>
+          <li>
+            <code className="rounded bg-muted px-1">NEXT_PUBLIC_SITE_URL</code> deve essere un URL
+            valido, es. <code className="rounded bg-muted px-1">https://bacardi-activation.vercel.app</code>{" "}
+            (con <strong className="text-foreground">https://</strong>).
+          </li>
+          <li>
+            <code className="rounded bg-muted px-1">NEXT_PUBLIC_SUPABASE_URL</code> deve essere tipo{" "}
+            <code className="rounded bg-muted px-1">https://abcdefgh.supabase.co</code> (senza spazi).
+          </li>
+        </ul>
+      </div>
+
       <p className="mt-8 text-sm">
         <Link className="text-primary underline underline-offset-4" href="/">
           Torna alla home

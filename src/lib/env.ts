@@ -1,8 +1,29 @@
 import { z } from "zod";
 
-const publicEnvSchema = z.object({
+/** Trim + rimuove slash finale (Supabase accetta l’URL con o senza /). */
+function trimUrl(value: string | undefined): string | undefined {
+  const t = value?.trim();
+  if (!t) return undefined;
+  return t.replace(/\/+$/, "");
+}
+
+/**
+ * Accetta `https://dominio`, oppure solo `dominio.it` (aggiunge https://).
+ * Stringa vuota → undefined (campo ignorato).
+ */
+function normalizeOptionalSiteUrl(value: string | undefined): string | undefined {
+  const t = value?.trim();
+  if (!t) return undefined;
+  const withScheme = /^https?:\/\//i.test(t) ? t : `https://${t}`;
+  return withScheme.replace(/\/+$/, "");
+}
+
+const publicCoreSchema = z.object({
   NEXT_PUBLIC_SUPABASE_URL: z.string().url(),
-  NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1),
+  NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(20, "anon key troppo corta"),
+});
+
+const publicEnvSchema = publicCoreSchema.extend({
   NEXT_PUBLIC_SITE_URL: z.string().url().optional(),
 });
 
@@ -10,12 +31,27 @@ export type PublicEnv = z.infer<typeof publicEnvSchema>;
 
 /** Non lancia: utile in middleware e nella home per evitare 500 se mancano le env in produzione. */
 export function getPublicEnvSafe(): PublicEnv | null {
-  const parsed = publicEnvSchema.safeParse({
-    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL?.trim(),
-    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim(),
-    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL?.trim() || undefined,
+  const supabaseUrl = trimUrl(process.env.NEXT_PUBLIC_SUPABASE_URL);
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim();
+  const siteCandidate = normalizeOptionalSiteUrl(process.env.NEXT_PUBLIC_SITE_URL);
+
+  const core = publicCoreSchema.safeParse({
+    NEXT_PUBLIC_SUPABASE_URL: supabaseUrl,
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: anonKey,
   });
-  return parsed.success ? parsed.data : null;
+  if (!core.success) return null;
+
+  let siteUrlParsed: string | undefined;
+  if (siteCandidate) {
+    const siteCheck = z.string().url().safeParse(siteCandidate);
+    siteUrlParsed = siteCheck.success ? siteCheck.data : undefined;
+  }
+
+  return {
+    NEXT_PUBLIC_SUPABASE_URL: core.data.NEXT_PUBLIC_SUPABASE_URL,
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: core.data.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    NEXT_PUBLIC_SITE_URL: siteUrlParsed,
+  };
 }
 
 export function isSupabaseConfigured(): boolean {
@@ -33,20 +69,24 @@ export function getPublicEnv(): PublicEnv {
 }
 
 const serviceEnvSchema = publicEnvSchema.extend({
-  SUPABASE_SERVICE_ROLE_KEY: z.string().min(1),
+  SUPABASE_SERVICE_ROLE_KEY: z.string().min(20),
 });
 
 export function getServiceEnv() {
+  const pub = getPublicEnvSafe();
+  if (!pub) {
+    throw new Error("Variabili pubbliche Supabase mancanti.");
+  }
   return serviceEnvSchema.parse({
-    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
-    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
-    SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
+    ...pub,
+    SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY?.trim(),
   });
 }
 
 export function siteUrl() {
-  const v = process.env.NEXT_PUBLIC_SITE_URL;
+  const env = getPublicEnvSafe();
+  if (env?.NEXT_PUBLIC_SITE_URL) return env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "");
+  const v = normalizeOptionalSiteUrl(process.env.NEXT_PUBLIC_SITE_URL);
   if (v) return v.replace(/\/$/, "");
   return "http://localhost:3000";
 }
