@@ -85,10 +85,15 @@ const config: Config = {
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
         },
+        "brand-tile-in": {
+          "0%": { opacity: "0", transform: "translateY(10px) scale(0.98)" },
+          "100%": { opacity: "1", transform: "translateY(0) scale(1)" },
+        },
       },
       animation: {
         "landing-in": "landing-in 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards",
         "landing-fade": "landing-fade 1s ease-out forwards",
+        "brand-tile-in": "brand-tile-in 0.65s cubic-bezier(0.22, 1, 0.36, 1) both",
       },
     },
   },
