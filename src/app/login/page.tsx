@@ -1,11 +1,16 @@
 import Link from "next/link";
 
-import { loginAction } from "@/app/actions/login";
+import {
+  loginWithPasswordAction,
+  signInWithGoogleAction,
+} from "@/app/actions/auth-credentials";
+import { loginMagicLinkAction } from "@/app/actions/login";
 import { MarketingBackdrop } from "@/components/landing/marketing-backdrop";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { explainSupabaseEnvIssues, isSupabaseConfigured } from "@/lib/env";
 import { instrumentDisplay } from "@/lib/fonts/instrument-display";
 import { cn } from "@/lib/utils";
 
@@ -15,6 +20,7 @@ export default async function LoginPage({
   searchParams?: Record<string, string | string[] | undefined>;
 }) {
   const sent = searchParams?.sent === "1";
+  const registered = searchParams?.registered === "1";
   const errorRaw = typeof searchParams?.error === "string" ? searchParams.error : null;
   const error =
     errorRaw && errorRaw !== "auth"
@@ -26,6 +32,9 @@ export default async function LoginPage({
           }
         })()
       : errorRaw;
+
+  const configured = isSupabaseConfigured();
+  const envHints = explainSupabaseEnvIssues();
 
   return (
     <div className={cn(instrumentDisplay.variable, "relative flex min-h-dvh flex-col text-foreground")}>
@@ -51,44 +60,143 @@ export default async function LoginPage({
               Accedi al portale
             </CardTitle>
             <p className="text-sm leading-relaxed text-muted-foreground">
-              Riceverai un magic link via email (invito o accesso con OTP).
+              Email e password, Google, oppure link via email se il tuo account è già invitato.
             </p>
           </CardHeader>
-          <CardContent className="space-y-4 pt-2">
+          <CardContent className="space-y-6 pt-2">
+            {!configured ? (
+              <div className="rounded-lg border border-amber-500/35 bg-amber-500/10 px-3 py-3 text-sm leading-relaxed text-foreground">
+                <p className="font-medium text-amber-950 dark:text-amber-100">
+                  Per accedere serve un progetto Supabase collegato.
+                </p>
+                <ul className="mt-2 list-inside list-disc space-y-1 text-muted-foreground">
+                  {envHints.map((hint) => (
+                    <li key={hint}>{hint}</li>
+                  ))}
+                </ul>
+                <p className="mt-3 text-xs text-muted-foreground">
+                  Dopo aver salvato <code className="rounded bg-muted px-1 py-0.5 font-mono text-[0.7rem]">.env.local</code>,{" "}
+                  <strong className="text-foreground">riavvia</strong> il server (
+                  <code className="rounded bg-muted px-1 font-mono text-[0.7rem]">Ctrl+C</code> poi{" "}
+                  <code className="rounded bg-muted px-1 font-mono text-[0.7rem]">npm run dev</code>).
+                </p>
+                <p className="mt-2 text-xs">
+                  <Link
+                    href="/configurazione"
+                    className="font-medium text-primary underline-offset-4 hover:underline"
+                  >
+                    Pagina configurazione
+                  </Link>
+                </p>
+              </div>
+            ) : null}
+
             {sent ? (
               <p className="rounded-lg border border-border/80 bg-muted/40 px-3 py-2.5 text-sm leading-relaxed">
                 Controlla la posta: ti abbiamo inviato un link per accedere.
               </p>
             ) : null}
+            {registered ? (
+              <p className="rounded-lg border border-border/80 bg-muted/40 px-3 py-2.5 text-sm leading-relaxed">
+                Registrazione inviata. Se Supabase richiede conferma email, apri il link nella posta; altrimenti puoi
+                accedere subito qui sotto.
+              </p>
+            ) : null}
             {error === "auth" ? (
               <p className="text-sm leading-relaxed text-destructive">
-                Autenticazione non riuscita. Riprova dal link email o richiedi un nuovo accesso.
+                Autenticazione non riuscita. Riprova o usa email e password.
               </p>
             ) : null}
             {error && error !== "auth" ? (
               <p className="text-sm leading-relaxed text-destructive">{error}</p>
             ) : null}
 
-            <form className="space-y-4" action={loginAction}>
-              <div className="space-y-2">
-                <Label htmlFor="email" className="text-foreground">
-                  Email
-                </Label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  inputMode="email"
-                  required
-                  placeholder="nome@azienda.it"
-                  className="h-11 border-border/80 bg-background transition-[box-shadow] focus-visible:ring-2"
-                />
-              </div>
-              <Button type="submit" className="h-11 w-full text-base font-semibold shadow-md shadow-primary/15">
-                Invia link di accesso
-              </Button>
-            </form>
+            {configured ? (
+              <>
+                <form action={signInWithGoogleAction}>
+                  <Button type="submit" variant="outline" className="h-11 w-full text-base font-semibold">
+                    Continua con Google
+                  </Button>
+                </form>
+
+                <div className="relative py-1">
+                  <div className="absolute inset-0 flex items-center" aria-hidden>
+                    <span className="w-full border-t border-border/80" />
+                  </div>
+                  <div className="relative flex justify-center text-xs uppercase tracking-wider">
+                    <span className="bg-card px-2 text-muted-foreground">oppure email</span>
+                  </div>
+                </div>
+
+                <form action={loginWithPasswordAction} className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="email" className="text-foreground">
+                      Email
+                    </Label>
+                    <Input
+                      id="email"
+                      name="email"
+                      type="email"
+                      autoComplete="email"
+                      inputMode="email"
+                      required
+                      placeholder="nome@azienda.it"
+                      className="h-11 border-border/80 bg-background transition-[box-shadow] focus-visible:ring-2"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="password" className="text-foreground">
+                      Password
+                    </Label>
+                    <Input
+                      id="password"
+                      name="password"
+                      type="password"
+                      autoComplete="current-password"
+                      required
+                      minLength={6}
+                      placeholder="••••••••"
+                      className="h-11 border-border/80 bg-background transition-[box-shadow] focus-visible:ring-2"
+                    />
+                  </div>
+                  <Button type="submit" className="h-11 w-full text-base font-semibold shadow-md shadow-primary/15">
+                    Accedi
+                  </Button>
+                </form>
+
+                <p className="text-center text-sm text-muted-foreground">
+                  Non hai un account?{" "}
+                  <Link
+                    href="/register"
+                    className="font-medium text-primary underline-offset-4 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+                  >
+                    Registrati
+                  </Link>
+                </p>
+
+                <details className="rounded-lg border border-border/60 bg-muted/20 px-3 py-2 text-sm">
+                  <summary className="cursor-pointer select-none font-medium text-foreground">
+                    Accedi con link email (magic link)
+                  </summary>
+                  <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                    Se hai ricevuto un invito o preferisci l’accesso senza password, usa la tua email qui sotto.
+                  </p>
+                  <form action={loginMagicLinkAction} className="mt-3 space-y-3">
+                    <Input
+                      name="email"
+                      type="email"
+                      autoComplete="email"
+                      required
+                      placeholder="nome@azienda.it"
+                      className="h-10 border-border/80 bg-background"
+                    />
+                    <Button type="submit" variant="secondary" className="h-10 w-full">
+                      Invia link di accesso
+                    </Button>
+                  </form>
+                </details>
+              </>
+            ) : null}
 
             <p className="text-center text-xs leading-relaxed text-muted-foreground">
               Problemi di accesso?{" "}

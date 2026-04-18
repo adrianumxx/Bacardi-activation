@@ -6,8 +6,13 @@ import { isSupabaseConfigured } from "@/lib/env";
 import { createClient } from "@/lib/supabase/server";
 
 export async function signOut() {
-  if (!isSupabaseConfigured()) redirect("/login");
-  const supabase = await createClient();
-  await supabase.auth.signOut();
+  if (isSupabaseConfigured()) {
+    try {
+      const supabase = await createClient();
+      await supabase.auth.signOut();
+    } catch {
+      /* session già assente o cookie non scrivibili */
+    }
+  }
   redirect("/login");
 }

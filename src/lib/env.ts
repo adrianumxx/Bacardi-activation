@@ -58,6 +58,43 @@ export function isSupabaseConfigured(): boolean {
   return getPublicEnvSafe() !== null;
 }
 
+/**
+ * Messaggi operativi (IT) quando Supabase non è ancora configurato — utile in UI login.
+ * Non espone segreti, solo cosa correggere.
+ */
+export function explainSupabaseEnvIssues(): string[] {
+  if (getPublicEnvSafe()) return [];
+
+  const issues: string[] = [];
+  const supabaseUrl = trimUrl(process.env.NEXT_PUBLIC_SUPABASE_URL);
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim();
+
+  if (!supabaseUrl) {
+    issues.push("Crea il file .env.local nella cartella del progetto e imposta NEXT_PUBLIC_SUPABASE_URL.");
+  } else {
+    try {
+      const u = new URL(supabaseUrl);
+      if (u.protocol !== "https:") {
+        issues.push("NEXT_PUBLIC_SUPABASE_URL deve usare https:// (es. https://xxxx.supabase.co).");
+      }
+    } catch {
+      issues.push("NEXT_PUBLIC_SUPABASE_URL non è un URL valido.");
+    }
+  }
+
+  if (!anonKey) {
+    issues.push("Imposta NEXT_PUBLIC_SUPABASE_ANON_KEY in .env.local (Supabase → Project Settings → API → anon public).");
+  } else if (anonKey.length < 20) {
+    issues.push("La chiave anon sembra troncata: incolla la stringa completa “anon public” dal dashboard Supabase.");
+  }
+
+  if (issues.length === 0) {
+    issues.push("Controlla NEXT_PUBLIC_SUPABASE_URL e NEXT_PUBLIC_SUPABASE_ANON_KEY in .env.local.");
+  }
+
+  return issues;
+}
+
 export function getPublicEnv(): PublicEnv {
   const env = getPublicEnvSafe();
   if (!env) {
