@@ -119,7 +119,8 @@
     "backHome": "Back to the portal presentation",
     "backBrand": "Back to the portal presentation",
     "catalogTeaser": "The quarterly catalogue is public: you can browse activations without signing in.",
-    "catalogCta": "Open activation catalogue"
+    "catalogCta": "Open activation catalogue",
+    "networkError": "Could not reach the server. Check your connection and that Supabase is reachable."
   },
   "register": {
     "title": "Create an account",

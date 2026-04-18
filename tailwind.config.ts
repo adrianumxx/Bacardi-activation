@@ -73,6 +73,8 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        /** Allineato al display (Montserrat) — usato da shadcn CardTitle come `font-heading`. */
+        heading: ["var(--font-brand-display)", "system-ui", "sans-serif"],
         display: ["var(--font-brand-display)", "system-ui", "sans-serif"],
         heritage: ["var(--font-heritage)", "Georgia", "Times New Roman", "serif"],
       },

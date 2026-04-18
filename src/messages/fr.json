@@ -119,7 +119,8 @@
     "backHome": "Retour à la présentation du portail",
     "backBrand": "Retour à la présentation du portail",
     "catalogTeaser": "Le catalogue trimestriel est public : vous pouvez parcourir les activations sans vous connecter.",
-    "catalogCta": "Ouvrir le catalogue activations"
+    "catalogCta": "Ouvrir le catalogue activations",
+    "networkError": "Connexion au serveur impossible. Vérifiez le réseau et que Supabase est joignable."
   },
   "register": {
     "title": "Créer un compte",

@@ -160,7 +160,7 @@
     outline-offset: 2px;
   }
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background font-sans text-foreground antialiased;
   }
   html {
     @apply font-sans;

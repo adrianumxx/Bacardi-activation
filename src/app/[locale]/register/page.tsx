@@ -44,8 +44,13 @@ export default async function RegisterPage({
   const configHref = localizedPath("/configurazione", locale);
   const catalogHref = localizedPath("/activations", locale);
 
+  const networkish =
+    typeof error === "string" &&
+    /fetch failed|failed to fetch|networkerror|load failed|net::/i.test(error.trim());
+  const errorDetail = error ? (networkish ? L.networkError : error) : null;
+
   return (
-    <div className="relative flex min-h-dvh flex-col text-foreground">
+    <div className="relative flex min-h-dvh flex-col font-sans tracking-normal text-foreground antialiased">
       <MarketingBackdrop variant="subtle" />
 
       <header className="mx-auto flex w-full max-w-md items-start justify-between gap-4 px-4 pt-8 sm:pt-10">
@@ -63,16 +68,18 @@ export default async function RegisterPage({
       </header>
 
       <div className="flex flex-1 flex-col justify-center px-4 py-10">
-        <Card className="mx-auto w-full max-w-md border-border/80 shadow-xl shadow-foreground/[0.06] ring-1 ring-black/[0.03] dark:ring-white/[0.05]">
-          <CardHeader className="space-y-1 pb-2">
-            <CardTitle className="font-display text-2xl font-extrabold tracking-tight sm:text-[1.65rem]">
+        <Card className="mx-auto w-full max-w-md rounded-2xl border-border/80 font-sans shadow-xl shadow-foreground/[0.06] ring-1 ring-black/[0.03] dark:ring-white/[0.05]">
+          <CardHeader className="space-y-2 pb-2">
+            <CardTitle className="font-display text-balance text-xl font-extrabold uppercase leading-tight tracking-tight text-foreground sm:text-2xl">
               {R.title}
             </CardTitle>
-            <p className="text-sm leading-relaxed text-muted-foreground">{R.subtitle}</p>
+            <p className="font-sans text-sm font-normal leading-relaxed tracking-normal text-muted-foreground">
+              {R.subtitle}
+            </p>
           </CardHeader>
           <CardContent className="space-y-6 pt-2">
             <div className="rounded-xl border border-primary/25 bg-primary/[0.08] p-4">
-              <p className="text-sm leading-relaxed text-muted-foreground">{L.catalogTeaser}</p>
+              <p className="font-sans text-sm font-normal leading-relaxed text-muted-foreground">{L.catalogTeaser}</p>
               <Link
                 href={catalogHref}
                 className={cn(
@@ -110,12 +117,16 @@ export default async function RegisterPage({
               </SupabaseSetupCallout>
             ) : null}
 
-            {error ? <p className="text-sm leading-relaxed text-destructive">{error}</p> : null}
+            {errorDetail ? (
+              <p className="font-sans text-sm font-medium leading-relaxed text-destructive">{errorDetail}</p>
+            ) : null}
 
             {configured ? (
-              <form action={registerWithPasswordAction} className="space-y-4">
+              <form action={registerWithPasswordAction} className="space-y-4 font-sans">
                 <div className="space-y-2">
-                  <Label htmlFor="email">{R.email}</Label>
+                  <Label htmlFor="email" className="font-sans text-sm font-semibold text-foreground">
+                    {R.email}
+                  </Label>
                   <Input
                     id="email"
                     name="email"
@@ -140,7 +151,9 @@ export default async function RegisterPage({
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="confirm">{R.confirm}</Label>
+                  <Label htmlFor="confirm" className="font-sans text-sm font-semibold text-foreground">
+                    {R.confirm}
+                  </Label>
                   <Input
                     id="confirm"
                     name="confirm"
@@ -158,7 +171,7 @@ export default async function RegisterPage({
               </form>
             ) : null}
 
-            <p className="text-center text-sm text-muted-foreground">
+            <p className="text-center font-sans text-sm font-normal text-muted-foreground">
               {R.hasAccount}{" "}
               <Link
                 href={loginHref}

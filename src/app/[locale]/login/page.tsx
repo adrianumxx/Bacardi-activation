@@ -54,8 +54,13 @@ export default async function LoginPage({
   const nextRaw = typeof searchParams?.next === "string" ? searchParams.next : null;
   const nextSafe = sanitizePostLoginRedirect(locale, nextRaw);
 
+  const networkish =
+    typeof error === "string" &&
+    /fetch failed|failed to fetch|networkerror|load failed|net::/i.test(error.trim());
+  const errorDetail = error && error !== "auth" ? (networkish ? L.networkError : error) : null;
+
   return (
-    <div className="relative flex min-h-dvh flex-col text-foreground">
+    <div className="relative flex min-h-dvh flex-col font-sans tracking-normal text-foreground antialiased">
       <MarketingBackdrop variant="subtle" />
 
       <header className="mx-auto flex w-full max-w-md items-start justify-between gap-4 px-4 pt-8 sm:pt-10">
@@ -73,16 +78,18 @@ export default async function LoginPage({
       </header>
 
       <div className="flex flex-1 flex-col justify-center px-4 py-10">
-        <Card className="mx-auto w-full max-w-md border-border/80 shadow-xl shadow-foreground/[0.06] ring-1 ring-black/[0.03] dark:ring-white/[0.05]">
-          <CardHeader className="space-y-1 pb-2">
-            <CardTitle className="font-display text-2xl font-extrabold tracking-tight sm:text-[1.65rem]">
+        <Card className="mx-auto w-full max-w-md rounded-2xl border-border/80 font-sans shadow-xl shadow-foreground/[0.06] ring-1 ring-black/[0.03] dark:ring-white/[0.05]">
+          <CardHeader className="space-y-2 pb-2">
+            <CardTitle className="font-display text-balance text-xl font-extrabold uppercase leading-tight tracking-tight text-foreground sm:text-2xl">
               {L.title}
             </CardTitle>
-            <p className="text-sm leading-relaxed text-muted-foreground">{L.subtitle}</p>
+            <p className="font-sans text-sm font-normal leading-relaxed tracking-normal text-muted-foreground">
+              {L.subtitle}
+            </p>
           </CardHeader>
           <CardContent className="space-y-6 pt-2">
             <div className="rounded-xl border border-primary/25 bg-primary/[0.08] p-4">
-              <p className="text-sm leading-relaxed text-muted-foreground">{L.catalogTeaser}</p>
+              <p className="font-sans text-sm font-normal leading-relaxed text-muted-foreground">{L.catalogTeaser}</p>
               <Link
                 href={catalogHref}
                 className={cn(
@@ -125,20 +132,20 @@ export default async function LoginPage({
             ) : null}
 
             {sent ? (
-              <p className="rounded-lg border border-border/80 bg-muted/40 px-3 py-2.5 text-sm leading-relaxed">
+              <p className="rounded-lg border border-border/80 bg-muted/40 px-3 py-2.5 font-sans text-sm font-normal leading-relaxed">
                 {L.sentMagic}
               </p>
             ) : null}
             {registered ? (
-              <p className="rounded-lg border border-border/80 bg-muted/40 px-3 py-2.5 text-sm leading-relaxed">
+              <p className="rounded-lg border border-border/80 bg-muted/40 px-3 py-2.5 font-sans text-sm font-normal leading-relaxed">
                 {L.registered}
               </p>
             ) : null}
             {error === "auth" ? (
-              <p className="text-sm leading-relaxed text-destructive">{L.authFail}</p>
+              <p className="font-sans text-sm font-medium leading-relaxed text-destructive">{L.authFail}</p>
             ) : null}
-            {error && error !== "auth" ? (
-              <p className="text-sm leading-relaxed text-destructive">{error}</p>
+            {errorDetail ? (
+              <p className="font-sans text-sm font-medium leading-relaxed text-destructive">{errorDetail}</p>
             ) : null}
 
             {configured ? (
@@ -154,15 +161,17 @@ export default async function LoginPage({
                   <div className="absolute inset-0 flex items-center" aria-hidden>
                     <span className="w-full border-t border-border/80" />
                   </div>
-                  <div className="relative flex justify-center text-xs uppercase tracking-wider">
-                    <span className="bg-card px-2 text-muted-foreground">{L.divider}</span>
+                  <div className="relative flex justify-center">
+                    <span className="bg-card px-2 font-display text-[0.65rem] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                      {L.divider}
+                    </span>
                   </div>
                 </div>
 
-                <form action={loginWithPasswordAction} className="space-y-4">
+                <form action={loginWithPasswordAction} className="space-y-4 font-sans">
                   <input type="hidden" name="next" value={nextSafe} />
                   <div className="space-y-2">
-                    <Label htmlFor="email" className="text-foreground">
+                    <Label htmlFor="email" className="font-sans text-sm font-semibold text-foreground">
                       {L.email}
                     </Label>
                     <Input
@@ -177,7 +186,7 @@ export default async function LoginPage({
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="password" className="text-foreground">
+                    <Label htmlFor="password" className="font-sans text-sm font-semibold text-foreground">
                       {L.password}
                     </Label>
                     <Input
@@ -196,7 +205,7 @@ export default async function LoginPage({
                   </Button>
                 </form>
 
-                <p className="text-center text-sm text-muted-foreground">
+                <p className="text-center font-sans text-sm font-normal text-muted-foreground">
                   {L.noAccount}{" "}
                   <Link
                     href={registerHref}
@@ -206,11 +215,11 @@ export default async function LoginPage({
                   </Link>
                 </p>
 
-                <details className="rounded-lg border border-border/60 bg-muted/20 px-3 py-2 text-sm">
-                  <summary className="cursor-pointer select-none font-medium text-foreground">
+                <details className="rounded-lg border border-border/60 bg-muted/20 px-3 py-2 font-sans text-sm">
+                  <summary className="cursor-pointer list-none font-display text-xs font-bold uppercase tracking-wide text-foreground [&::-webkit-details-marker]:hidden">
                     {L.magicSummary}
                   </summary>
-                  <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{L.magicHelp}</p>
+                  <p className="mt-2 font-sans text-xs font-normal leading-relaxed text-muted-foreground">{L.magicHelp}</p>
                   <form action={loginMagicLinkAction} className="mt-3 space-y-3">
                     <input type="hidden" name="next" value={nextSafe} />
                     <Input
@@ -229,13 +238,13 @@ export default async function LoginPage({
               </>
             ) : null}
 
-            <p className="text-center text-xs leading-relaxed text-muted-foreground">
-              {L.support} <span className="text-foreground/90">{L.supportBold}</span>
+            <p className="text-center font-sans text-xs font-normal leading-relaxed text-muted-foreground">
+              {L.support} <span className="font-medium text-foreground/90">{L.supportBold}</span>
             </p>
           </CardContent>
         </Card>
 
-        <p className="mx-auto mt-8 max-w-md text-center text-xs text-muted-foreground">
+        <p className="mx-auto mt-8 max-w-md text-center font-sans text-xs font-normal text-muted-foreground">
           <Link
             href={homeHref}
             className="rounded-sm underline-offset-4 transition-colors hover:text-foreground hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"

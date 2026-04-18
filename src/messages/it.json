@@ -119,7 +119,8 @@
     "backHome": "Torna alla presentazione del portale",
     "backBrand": "Torna alla presentazione del portale",
     "catalogTeaser": "Il catalogo trimestre è pubblico: puoi vedere le attivazioni senza accedere.",
-    "catalogCta": "Apri il catalogo attivazioni"
+    "catalogCta": "Apri il catalogo attivazioni",
+    "networkError": "Connessione al server non riuscita. Controlla la rete e che Supabase sia raggiungibile."
   },
   "register": {
     "title": "Crea un account",

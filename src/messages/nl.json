@@ -119,7 +119,8 @@
     "backHome": "Terug naar de portalpresentatie",
     "backBrand": "Terug naar de portalpresentatie",
     "catalogTeaser": "De kwartaalcatalogus is openbaar: u kunt activaties bekijken zonder in te loggen.",
-    "catalogCta": "Open activatiecatalogus"
+    "catalogCta": "Open activatiecatalogus",
+    "networkError": "Geen verbinding met de server. Controleer het netwerk en of Supabase bereikbaar is."
   },
   "register": {
     "title": "Account aanmaken",
