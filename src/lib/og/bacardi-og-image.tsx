@@ -18,7 +18,7 @@ function siteHostLabel(): string {
 
 /**
  * Immagine social 1200×630 (Open Graph / Twitter).
- * Stili inline compatibili con Satori (niente Tailwind).
+ * Palette Bacardi: nero, rosso #D71920, tipografia sans pesante.
  */
 export async function createBacardiOgImageResponse() {
   const domainLabel = siteHostLabel();
@@ -31,7 +31,7 @@ export async function createBacardiOgImageResponse() {
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          background: "linear-gradient(152deg, #fff7f6 0%, #fdecea 42%, #fff7f6 88%)",
+          background: "#000000",
           position: "relative",
           fontFamily:
             'ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
@@ -40,23 +40,23 @@ export async function createBacardiOgImageResponse() {
         <div
           style={{
             position: "absolute",
-            top: -120,
-            right: -100,
-            width: 520,
-            height: 520,
+            top: -140,
+            right: -120,
+            width: 560,
+            height: 560,
             borderRadius: "50%",
-            background: "rgba(188, 36, 50, 0.14)",
+            background: "rgba(215, 25, 32, 0.35)",
           }}
         />
         <div
           style={{
             position: "absolute",
-            bottom: -80,
-            left: -60,
-            width: 380,
-            height: 380,
+            bottom: -100,
+            left: -80,
+            width: 420,
+            height: 420,
             borderRadius: "50%",
-            background: "rgba(139, 21, 48, 0.1)",
+            background: "rgba(215, 25, 32, 0.15)",
           }}
         />
 
@@ -68,7 +68,7 @@ export async function createBacardiOgImageResponse() {
             justifyContent: "center",
             padding: "64px 72px",
             zIndex: 1,
-            maxWidth: 1040,
+            maxWidth: 1080,
           }}
         >
           <div
@@ -76,7 +76,7 @@ export async function createBacardiOgImageResponse() {
               fontSize: 13,
               letterSpacing: "0.32em",
               textTransform: "uppercase" as const,
-              color: "#78716c",
+              color: "#a3a3a3",
               fontWeight: 650,
             }}
           >
@@ -84,13 +84,13 @@ export async function createBacardiOgImageResponse() {
           </div>
           <div
             style={{
-              marginTop: 18,
-              fontSize: 92,
-              lineHeight: 0.92,
-              letterSpacing: "-0.03em",
-              color: "#0c0a09",
-              fontFamily: 'Georgia, "Times New Roman", Times, serif',
-              fontWeight: 400,
+              marginTop: 20,
+              fontSize: 88,
+              lineHeight: 0.9,
+              letterSpacing: "-0.04em",
+              color: "#fafafa",
+              fontWeight: 900,
+              textTransform: "uppercase" as const,
             }}
           >
             Bacardi
@@ -100,13 +100,12 @@ export async function createBacardiOgImageResponse() {
               marginTop: 28,
               fontSize: 26,
               lineHeight: 1.35,
-              color: "#57534e",
-              fontWeight: 450,
-              maxWidth: 820,
+              color: "#d4d4d4",
+              fontWeight: 500,
+              maxWidth: 860,
             }}
           >
-            Catalogo trimestre, requisiti in chiaro e prenotazione Microsoft Bookings — dedicato al
-            canale Italia.
+            Catalogo trimestre, requisiti in chiaro e Microsoft Bookings — canale Italia.
           </div>
           <div
             style={{
@@ -121,10 +120,10 @@ export async function createBacardiOgImageResponse() {
                 width: 10,
                 height: 10,
                 borderRadius: 999,
-                background: "#bc2432",
+                background: "#d71920",
               }}
             />
-            <div style={{ fontSize: 17, color: "#44403c", fontWeight: 550 }}>{domainLabel}</div>
+            <div style={{ fontSize: 17, color: "#a3a3a3", fontWeight: 550 }}>{domainLabel}</div>
           </div>
         </div>
 
@@ -132,7 +131,7 @@ export async function createBacardiOgImageResponse() {
           style={{
             height: 10,
             width: "100%",
-            background: "#bc2432",
+            background: "#d71920",
             zIndex: 2,
           }}
         />

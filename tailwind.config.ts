@@ -69,7 +69,7 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
-        display: ["var(--font-landing-display)", "ui-serif", "Georgia", "serif"],
+        display: ["var(--font-brand-display)", "system-ui", "sans-serif"],
       },
       keyframes: {
         "landing-in": {

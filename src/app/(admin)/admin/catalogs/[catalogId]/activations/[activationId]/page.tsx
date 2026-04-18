@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { DEFAULT_BOOKINGS_PAGE_URL } from "@/lib/bookings-default";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function EditActivationPage({
@@ -112,7 +113,7 @@ export default async function EditActivationPage({
               <Input
                 id="bookings_url"
                 name="bookings_url"
-                defaultValue={activation.bookings_url ?? ""}
+                defaultValue={activation.bookings_url?.trim() || DEFAULT_BOOKINGS_PAGE_URL}
               />
             </div>
 

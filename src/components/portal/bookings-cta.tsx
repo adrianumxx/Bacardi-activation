@@ -34,7 +34,7 @@ export function BookingsCta({
         }
       }}
     >
-      {loading ? "Apertura…" : "Prenota su Microsoft Bookings"}
+      {loading ? "Apertura…" : "Prenota su Bookings"}
     </Button>
   );
 }

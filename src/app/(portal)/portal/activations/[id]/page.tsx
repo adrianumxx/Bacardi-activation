@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { BookingsCta } from "@/components/portal/bookings-cta";
+import { resolveBookingsUrl } from "@/lib/bookings-default";
 import { createClient } from "@/lib/supabase/server";
 import { evaluateActivationEligibility } from "@/lib/requirements/activation";
 import { embedOne } from "@/lib/supabase/embed";
@@ -45,8 +46,8 @@ export default async function ActivationDetailPage({
     activation.catalogs,
   );
 
-  const canBook =
-    eligibility.ok && Boolean(activation.bookings_url?.trim().length);
+  const bookingsResolved = resolveBookingsUrl(activation.bookings_url);
+  const canBook = eligibility.ok && Boolean(bookingsResolved);
 
   return (
     <div className="space-y-6">
@@ -139,9 +140,10 @@ export default async function ActivationDetailPage({
             Bookings. La conferma finale avviene nel tuo calendario Outlook completando il flusso
             Bookings.
           </p>
-          {!activation.bookings_url ? (
-            <p className="text-destructive">
-              URL Bookings non ancora configurato dall’amministratore.
+          {!activation.bookings_url?.trim() ? (
+            <p className="text-xs text-muted-foreground">
+              Per questa attivazione non è stato impostato un URL dedicato: si apre la{" "}
+              <strong className="text-foreground">pagina Bookings predefinita del referente</strong>.
             </p>
           ) : null}
           <BookingsCta activationId={activation.id} disabled={!canBook} />

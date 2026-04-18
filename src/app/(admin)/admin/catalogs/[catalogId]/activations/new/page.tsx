@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { DEFAULT_BOOKINGS_PAGE_URL } from "@/lib/bookings-default";
 import { createClient } from "@/lib/supabase/server";
 import { DEFAULT_REQUIREMENTS_JSON } from "@/lib/defaults";
 
@@ -92,7 +93,8 @@ export default async function NewActivationPage({
               <Input
                 id="bookings_url"
                 name="bookings_url"
-                placeholder="https://outlook.office365.com/owa/calendar/..."
+                defaultValue={DEFAULT_BOOKINGS_PAGE_URL}
+                placeholder="https://book.ms/b/..."
               />
             </div>
 

@@ -11,8 +11,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { explainSupabaseEnvIssues, isSupabaseConfigured } from "@/lib/env";
-import { instrumentDisplay } from "@/lib/fonts/instrument-display";
-import { cn } from "@/lib/utils";
 
 export default async function LoginPage({
   searchParams,
@@ -37,7 +35,7 @@ export default async function LoginPage({
   const envHints = explainSupabaseEnvIssues();
 
   return (
-    <div className={cn(instrumentDisplay.variable, "relative flex min-h-dvh flex-col text-foreground")}>
+    <div className="relative flex min-h-dvh flex-col text-foreground">
       <MarketingBackdrop variant="subtle" />
 
       <header className="mx-auto flex w-full max-w-md items-start justify-between gap-4 px-4 pt-8 sm:pt-10">
@@ -56,7 +54,7 @@ export default async function LoginPage({
       <div className="flex flex-1 flex-col justify-center px-4 py-10">
         <Card className="mx-auto w-full max-w-md border-border/80 shadow-xl shadow-foreground/[0.06] ring-1 ring-black/[0.03] dark:ring-white/[0.05]">
           <CardHeader className="space-y-1 pb-2">
-            <CardTitle className="font-display text-2xl font-normal tracking-tight sm:text-[1.65rem]">
+            <CardTitle className="font-display text-2xl font-extrabold tracking-tight sm:text-[1.65rem]">
               Accedi al portale
             </CardTitle>
             <p className="text-sm leading-relaxed text-muted-foreground">

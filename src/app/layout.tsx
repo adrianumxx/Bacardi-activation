@@ -1,12 +1,23 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { DM_Sans, Montserrat } from "next/font/google";
 
 import "./globals.css";
 import { Providers } from "@/components/providers";
 import { siteUrl } from "@/lib/env";
 import { cn } from "@/lib/utils";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["600", "700", "800", "900"],
+  variable: "--font-brand-display",
+  display: "swap",
+});
 
 function metadataBaseUrl(): URL {
   try {
@@ -29,8 +40,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="it" suppressHydrationWarning>
-      <body className={cn("min-h-dvh bg-background text-foreground", inter.variable)}>
+    <html lang="it" className="dark" suppressHydrationWarning>
+      <body className={cn("min-h-dvh bg-background text-foreground", dmSans.variable, montserrat.variable)}>
         <Providers>{children}</Providers>
       </body>
     </html>

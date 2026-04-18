@@ -1,8 +1,10 @@
 import Link from "next/link";
-import { ArrowRight, CalendarClock, ClipboardCheck, Sparkles } from "lucide-react";
+import { ArrowRight, CalendarClock, ClipboardCheck, ExternalLink, Sparkles } from "lucide-react";
 
+import { BacardiMark } from "@/components/brand/bacardi-mark";
 import { MarketingBackdrop } from "@/components/landing/marketing-backdrop";
 import { buttonVariants } from "@/components/ui/button";
+import { DEFAULT_BOOKINGS_PAGE_URL } from "@/lib/bookings-default";
 import { cn } from "@/lib/utils";
 
 type BacardiLandingProps = {
@@ -34,18 +36,37 @@ export function BacardiLanding({ className, isAuthenticated }: BacardiLandingPro
         Salta al contenuto
       </a>
 
-      <header className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-4 py-6 sm:px-6 lg:px-8">
+      <header className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-6 sm:gap-6 sm:px-6 lg:px-8">
         <Link
           href="/"
-          className="group flex flex-col gap-0.5 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          className="group flex items-center gap-3 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           aria-label="Bacardi — portale attivazioni, home"
         >
-          <span className="text-[0.65rem] font-semibold uppercase tracking-[0.28em] text-muted-foreground transition-colors group-hover:text-foreground">
-            Portale attivazioni
-          </span>
-          <span className="font-display text-2xl font-normal tracking-tight sm:text-3xl">Bacardi</span>
+          <BacardiMark size="md" className="motion-safe:transition-transform motion-safe:group-hover:scale-[1.03]" />
+          <div className="flex flex-col gap-0.5">
+            <span className="text-[0.65rem] font-semibold uppercase tracking-[0.28em] text-muted-foreground transition-colors group-hover:text-foreground">
+              Portale attivazioni
+            </span>
+            <span className="font-display text-2xl font-extrabold uppercase tracking-tight text-foreground sm:text-3xl">
+              Bacardi
+            </span>
+          </div>
         </Link>
-        <nav className="flex items-center gap-2 text-sm" aria-label="Navigazione principale">
+        <nav className="flex flex-wrap items-center justify-end gap-2 text-sm" aria-label="Navigazione principale">
+          <a
+            href={DEFAULT_BOOKINGS_PAGE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={buttonVariants({
+              variant: "outline",
+              size: "sm",
+              className:
+                "min-h-10 gap-1.5 rounded-full border-primary/40 bg-transparent px-3 text-foreground no-underline hover:border-primary hover:bg-primary/10 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+            })}
+          >
+            <ExternalLink className="size-3.5 shrink-0 opacity-80" aria-hidden />
+            Bookings
+          </a>
           {isAuthenticated ? (
             <Link
               href={portalHref}
@@ -99,20 +120,20 @@ export function BacardiLanding({ className, isAuthenticated }: BacardiLandingPro
               )}
             >
               <Sparkles className="size-3.5 shrink-0 text-primary" aria-hidden />
-              <span>Trimestre attivo · requisiti chiari · prenotazione guidata</span>
+              <span>Trimestre attivo · requisiti chiari · Microsoft Bookings</span>
             </p>
             <h1
               id="hero-heading"
               className={cn(
-                "font-display text-balance text-4xl font-normal leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl",
+                "font-display text-balance text-4xl font-extrabold uppercase leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl",
                 "opacity-100 motion-safe:animate-landing-in motion-safe:opacity-0 motion-safe:[animation-delay:140ms]",
               )}
             >
               Attivazioni sul territorio,{" "}
-              <span className="relative inline-block sm:whitespace-nowrap">
+              <span className="relative inline-block text-primary sm:whitespace-nowrap">
                 <span className="relative z-10">con ordine e stile.</span>
                 <span
-                  className="absolute -inset-x-1 bottom-1 z-0 h-3 skew-x-[-10deg] bg-primary/15 sm:h-3.5"
+                  className="absolute -inset-x-1 bottom-1 z-0 h-3 skew-x-[-10deg] bg-primary/20 sm:h-3.5"
                   aria-hidden
                 />
               </span>
@@ -124,11 +145,11 @@ export function BacardiLanding({ className, isAuthenticated }: BacardiLandingPro
               )}
             >
               Esplora il catalogo, verifica in tempo reale i requisiti del tuo punto vendita e, se
-              idoneo, apri Microsoft Bookings con un solo gesto.
+              idoneo, apri la pagina Microsoft Bookings del referente in un clic.
             </p>
             <div
               className={cn(
-                "mt-10 flex flex-col gap-3 sm:flex-row sm:items-center",
+                "mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center",
                 "opacity-100 motion-safe:animate-landing-in motion-safe:opacity-0 motion-safe:[animation-delay:300ms]",
               )}
             >
@@ -137,29 +158,43 @@ export function BacardiLanding({ className, isAuthenticated }: BacardiLandingPro
                 className={buttonVariants({
                   size: "lg",
                   className:
-                    "min-h-12 gap-2 rounded-full px-8 text-base shadow-lg shadow-primary/25 no-underline transition-[transform,box-shadow] hover:shadow-xl hover:shadow-primary/20 motion-safe:active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                    "min-h-12 gap-2 rounded-full px-8 text-base shadow-lg shadow-primary/30 no-underline transition-[transform,box-shadow] hover:shadow-xl hover:shadow-primary/25 motion-safe:active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                 })}
               >
                 {isAuthenticated ? "Scegli l’attivazione" : "Entra e scegli l’attivazione"}
                 <ArrowRight className="size-5" aria-hidden />
               </Link>
+              <a
+                href={DEFAULT_BOOKINGS_PAGE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={buttonVariants({
+                  variant: "outline",
+                  size: "lg",
+                  className:
+                    "min-h-12 gap-2 rounded-full border-primary/50 px-7 text-base no-underline hover:border-primary hover:bg-primary/10 motion-safe:active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                })}
+              >
+                <CalendarClock className="size-5 shrink-0" aria-hidden />
+                Prenota su Bookings
+              </a>
               {isAuthenticated ? (
                 <Link
                   href="/portal/profile"
                   className={buttonVariants({
-                    variant: "outline",
+                    variant: "secondary",
                     size: "lg",
                     className:
                       "min-h-12 rounded-full px-7 no-underline transition-[transform,box-shadow] motion-safe:active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                   })}
                 >
-                  Completa il profilo
+                  Profilo
                 </Link>
               ) : (
                 <Link
                   href="#come-funziona"
                   className={buttonVariants({
-                    variant: "outline",
+                    variant: "secondary",
                     size: "lg",
                     className:
                       "min-h-12 rounded-full px-7 no-underline transition-[transform,box-shadow] motion-safe:active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
@@ -177,9 +212,9 @@ export function BacardiLanding({ className, isAuthenticated }: BacardiLandingPro
             >
               <div className="sm:border-l sm:border-border/60 sm:pl-6 first:sm:border-l-0 first:sm:pl-0">
                 <dt className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                  Flusso
+                  Accesso
                 </dt>
-                <dd className="mt-1.5 font-medium leading-snug">Magic link sicuro</dd>
+                <dd className="mt-1.5 font-medium leading-snug">Email, password o Google</dd>
               </div>
               <div className="sm:border-l sm:border-border/60 sm:pl-6">
                 <dt className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
@@ -191,7 +226,7 @@ export function BacardiLanding({ className, isAuthenticated }: BacardiLandingPro
                 <dt className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                   Prenota
                 </dt>
-                <dd className="mt-1.5 font-medium leading-snug">Bookings integrato</dd>
+                <dd className="mt-1.5 font-medium leading-snug">Microsoft Bookings</dd>
               </div>
             </dl>
           </div>
@@ -203,15 +238,18 @@ export function BacardiLanding({ className, isAuthenticated }: BacardiLandingPro
             )}
           >
             <figure
-              className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-[2rem] border border-border/60 bg-card shadow-2xl shadow-foreground/[0.08] ring-1 ring-black/[0.04] dark:ring-white/[0.06] sm:mx-auto lg:mx-0"
+              className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-[2rem] border border-border/60 bg-card shadow-2xl shadow-primary/10 ring-1 ring-white/10 sm:mx-auto lg:mx-0"
               aria-label="Anteprima illustrativa: catalogo trimestre, dettaglio requisiti e indicatore di idoneità punto vendita."
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.08] via-transparent to-foreground/[0.04]" />
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/15 via-transparent to-foreground/[0.06]" />
+              <div className="absolute inset-0 flex items-center justify-center opacity-[0.12]" aria-hidden>
+                <BacardiMark size="lg" className="scale-[2.2] blur-[1px]" />
+              </div>
               <div className="absolute left-5 top-5 right-5 rounded-2xl border border-border/60 bg-background/90 p-4 shadow-sm backdrop-blur-md sm:left-6 sm:top-6 sm:right-6 sm:p-5">
                 <p className="text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
                   Anteprima percorso
                 </p>
-                <p className="mt-2 font-display text-2xl tracking-tight text-foreground">
+                <p className="mt-2 font-display text-2xl font-bold uppercase tracking-tight text-foreground">
                   Catalogo trimestre
                 </p>
                 <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
@@ -221,7 +259,7 @@ export function BacardiLanding({ className, isAuthenticated }: BacardiLandingPro
               <div className="absolute bottom-5 left-5 right-5 space-y-3 rounded-2xl border border-border/60 bg-card/95 p-4 shadow-lg backdrop-blur-sm sm:bottom-6 sm:left-6 sm:right-6">
                 <div className="flex items-center justify-between gap-3">
                   <span className="text-sm font-medium text-foreground">Idoneità punto vendita</span>
-                  <span className="shrink-0 rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
+                  <span className="shrink-0 rounded-full bg-primary/15 px-2.5 py-0.5 text-xs font-semibold text-primary">
                     Live
                   </span>
                 </div>
@@ -232,13 +270,19 @@ export function BacardiLanding({ className, isAuthenticated }: BacardiLandingPro
                 >
                   <div className="h-full w-[72%] rounded-full bg-primary" />
                 </div>
-                <p className="text-xs leading-relaxed text-muted-foreground">
-                  Esempio a solo scopo illustrativo dell’esperienza nel portale.
-                </p>
+                <a
+                  href={DEFAULT_BOOKINGS_PAGE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-primary py-2.5 text-center text-xs font-bold uppercase tracking-wide text-primary-foreground no-underline transition-opacity hover:opacity-90"
+                >
+                  Apri Bookings
+                  <ExternalLink className="size-3.5" aria-hidden />
+                </a>
               </div>
             </figure>
             <div
-              className="pointer-events-none absolute -right-8 -bottom-6 hidden h-36 w-36 rounded-full border border-dashed border-primary/20 sm:block"
+              className="pointer-events-none absolute -right-8 -bottom-6 hidden h-36 w-36 rounded-full border border-dashed border-primary/30 sm:block"
               aria-hidden
             />
           </div>
@@ -252,7 +296,7 @@ export function BacardiLanding({ className, isAuthenticated }: BacardiLandingPro
           <div className="max-w-2xl">
             <h2
               id="come-funziona-titolo"
-              className="font-display text-3xl font-normal tracking-tight text-balance sm:text-4xl"
+              className="font-display text-3xl font-extrabold uppercase tracking-tight text-balance sm:text-4xl"
             >
               Tre passi. Zero ambiguità.
             </h2>
@@ -281,11 +325,11 @@ export function BacardiLanding({ className, isAuthenticated }: BacardiLandingPro
               <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                 01
               </p>
-              <h3 className="mt-2 font-display text-xl tracking-tight text-foreground">
-                Accedi con invito
+              <h3 className="mt-2 font-display text-xl font-bold uppercase tracking-tight text-foreground">
+                Accedi al portale
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                Email verificata: niente password da ricordare, sessione moderna e sicura.
+                Email e password, Google oppure link invito: sessione sicura e tracciabile.
               </p>
             </li>
             <li
@@ -307,7 +351,7 @@ export function BacardiLanding({ className, isAuthenticated }: BacardiLandingPro
               <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                 02
               </p>
-              <h3 className="mt-2 font-display text-xl tracking-tight text-foreground">
+              <h3 className="mt-2 font-display text-xl font-bold uppercase tracking-tight text-foreground">
                 Scegli l’attivazione
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
@@ -333,11 +377,12 @@ export function BacardiLanding({ className, isAuthenticated }: BacardiLandingPro
               <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                 03
               </p>
-              <h3 className="mt-2 font-display text-xl tracking-tight text-foreground">
-                Prenota se idoneo
+              <h3 className="mt-2 font-display text-xl font-bold uppercase tracking-tight text-foreground">
+                Prenota su Bookings
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                Microsoft Bookings si apre solo quando i requisiti sono soddisfatti: meno errori.
+                Pagina Microsoft Bookings del referente; dal catalogo il pulsante si attiva solo se
+                idoneo.
               </p>
             </li>
           </ol>
@@ -346,14 +391,27 @@ export function BacardiLanding({ className, isAuthenticated }: BacardiLandingPro
 
       <footer className="border-t border-border/60 bg-card/50 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-12 sm:flex-row sm:items-start sm:justify-between sm:px-6 lg:px-8">
-          <div className="max-w-md space-y-2">
-            <p className="font-display text-lg tracking-tight text-foreground">Bacardi Italia</p>
+          <div className="max-w-md space-y-3">
+            <div className="flex items-center gap-3">
+              <BacardiMark size="sm" />
+              <p className="font-display text-lg font-bold uppercase tracking-tight text-foreground">
+                Bacardi Italia
+              </p>
+            </div>
             <p className="text-xs leading-relaxed text-muted-foreground">
               Esperienza dedicata al canale Italia. Per supporto operativo contatta il team Carda
               Bacardi.
             </p>
           </div>
           <nav className="flex flex-col gap-3 text-sm sm:items-end" aria-label="Link di servizio">
+            <a
+              href={DEFAULT_BOOKINGS_PAGE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-fit rounded-sm font-medium text-primary underline-offset-4 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            >
+              Microsoft Bookings — referente
+            </a>
             <Link
               className="w-fit rounded-sm text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               href={loginHref}

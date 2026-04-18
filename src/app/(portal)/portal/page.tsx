@@ -1,11 +1,15 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { CalendarClock, ExternalLink } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
+import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { DEFAULT_BOOKINGS_PAGE_URL } from "@/lib/bookings-default";
 import { createClient } from "@/lib/supabase/server";
 import { evaluateActivationEligibility } from "@/lib/requirements/activation";
 import { embedOne } from "@/lib/supabase/embed";
+import { cn } from "@/lib/utils";
 
 export default async function PortalHomePage() {
   const supabase = await createClient();
@@ -59,8 +63,36 @@ export default async function PortalHomePage() {
 
   return (
     <div className="space-y-6">
+      <div className="flex flex-col gap-3 rounded-xl border border-primary/35 bg-primary/10 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-start gap-3">
+          <div className="mt-0.5 flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/20 text-primary">
+            <CalendarClock className="size-5" aria-hidden />
+          </div>
+          <div>
+            <p className="font-display text-sm font-bold uppercase tracking-wide text-foreground">
+              Prenotazione referente
+            </p>
+            <p className="mt-1 max-w-xl text-xs leading-relaxed text-muted-foreground sm:text-sm">
+              Apri direttamente la pagina Microsoft Bookings del referente per slot e disponibilità.
+            </p>
+          </div>
+        </div>
+        <a
+          href={DEFAULT_BOOKINGS_PAGE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={cn(
+            buttonVariants({ size: "default" }),
+            "shrink-0 gap-2 self-start sm:self-center",
+          )}
+        >
+          Bookings
+          <ExternalLink className="size-4" aria-hidden />
+        </a>
+      </div>
+
       <div>
-        <h1 className="text-3xl font-semibold tracking-tight">Catalogo attività</h1>
+        <h1 className="font-display text-3xl font-extrabold uppercase tracking-tight">Catalogo attività</h1>
         <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
           Qui trovi le attivazioni del trimestre corrente. L’idoneità è calcolata in base al tuo
           profilo: completa i dati in{" "}

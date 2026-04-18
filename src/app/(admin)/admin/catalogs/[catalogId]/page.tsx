@@ -200,7 +200,7 @@ export default async function AdminCatalogDetailPage({
                     <TableCell className="font-medium">{a.title}</TableCell>
                     <TableCell className="text-sm text-muted-foreground">{a.type}</TableCell>
                     <TableCell className="text-sm text-muted-foreground">
-                      {a.bookings_url ? "OK" : "manca URL"}
+                      {a.bookings_url?.trim() ? "URL dedicato" : "Default referente"}
                     </TableCell>
                     <TableCell className="text-right">
                       <Link

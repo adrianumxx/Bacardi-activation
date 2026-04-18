@@ -3,8 +3,6 @@ import type { Metadata } from "next";
 import { BacardiLanding } from "@/components/landing/bacardi-landing";
 import { getOptionalUser } from "@/lib/auth/session";
 import { siteUrl } from "@/lib/env";
-import { instrumentDisplay } from "@/lib/fonts/instrument-display";
-import { cn } from "@/lib/utils";
 
 const title = "Attivazioni Bacardi — Portale dedicato";
 const description =
@@ -43,9 +41,5 @@ export function generateMetadata(): Metadata {
 export default async function Home() {
   const user = await getOptionalUser();
 
-  return (
-    <div className={cn(instrumentDisplay.variable, "min-h-dvh")}>
-      <BacardiLanding isAuthenticated={Boolean(user)} />
-    </div>
-  );
+  return <BacardiLanding isAuthenticated={Boolean(user)} />;
 }

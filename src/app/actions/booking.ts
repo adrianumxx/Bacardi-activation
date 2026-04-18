@@ -1,8 +1,9 @@
 "use server";
 
-import { createClient } from "@/lib/supabase/server";
 import { requireUser } from "@/lib/auth/session";
+import { resolveBookingsUrl } from "@/lib/bookings-default";
 import { evaluateActivationEligibility } from "@/lib/requirements/activation";
+import { createClient } from "@/lib/supabase/server";
 
 export async function logBookingClick(activationId: string) {
   const user = await requireUser();
@@ -18,12 +19,7 @@ export async function logBookingClick(activationId: string) {
     return { ok: false as const, error: "Attivazione non trovata." };
   }
 
-  if (!activation.bookings_url) {
-    return {
-      ok: false as const,
-      error: "URL Microsoft Bookings non configurato per questa attivazione.",
-    };
-  }
+  const bookingsUrl = resolveBookingsUrl(activation.bookings_url);
 
   const { data: attrsRow } = await supabase
     .from("client_attributes")
@@ -52,5 +48,5 @@ export async function logBookingClick(activationId: string) {
     return { ok: false as const, error: "Impossibile registrare il click. Riprova." };
   }
 
-  return { ok: true as const, url: activation.bookings_url };
+  return { ok: true as const, url: bookingsUrl };
 }
