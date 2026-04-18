@@ -1,0 +1,14 @@
+Collegare la CLI al progetto remoto (una tantum, dal tuo PC):
+
+1) Ottieni un access token: Supabase Dashboard → Account (in alto a destra) → Access Tokens → Generate new token.
+
+2) Da terminale, nella root del repo:
+   npx supabase login --token "TUO_ACCESS_TOKEN"
+
+3) Poi:
+   npx supabase link --project-ref klxbudllpuushacalihi
+
+4) Per applicare le migrazioni sul remoto (dopo il link):
+   npx supabase db push
+
+In alternativa senza CLI: SQL Editor → incolla i file in supabase/migrations/ e supabase/scripts/ensure_public_catalog_anon.sql nell’ordine indicato nella guida.
