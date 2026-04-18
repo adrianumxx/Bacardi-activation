@@ -37,9 +37,9 @@ function metadataBaseUrl(): URL {
 
 export const metadata: Metadata = {
   metadataBase: metadataBaseUrl(),
-  title: "BACARDÍ — Portale attivazioni canale Italia",
+  title: "BACARDÍ — Belgium trade activations",
   description:
-    "Catalogo attivazioni, criteri di idoneità e Microsoft Bookings per il trade italiano autorizzato (Bacardi Limited).",
+    "Microsoft Bookings with your contact, quarterly catalogue and eligibility for authorised Bacardi Belgium on-trade (Bacardi Limited).",
 };
 
 export default function RootLayout({
@@ -48,7 +48,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="it" className="dark" suppressHydrationWarning>
+    <html lang="nl" className="dark" suppressHydrationWarning>
       <body
         className={cn(
           "min-h-dvh bg-background text-foreground",

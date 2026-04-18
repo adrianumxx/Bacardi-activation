@@ -157,7 +157,7 @@ export default async function AdminCatalogDetailPage({
           <form action={cloneCatalogAction.bind(null, catalog.id)} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="clone_name">Nome nuovo catalogo</Label>
-              <Input id="clone_name" name="name" required placeholder="Q3 2026 — Italia" />
+              <Input id="clone_name" name="name" required placeholder="Q3 2026 — Belgium" />
             </div>
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">

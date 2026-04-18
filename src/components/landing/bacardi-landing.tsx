@@ -56,7 +56,7 @@ export function BacardiLanding({ className, isAuthenticated, locale, dict }: Bac
         >
           <BacardiMark size="md" className="motion-safe:transition-transform motion-safe:group-hover:scale-[1.03]" />
           <div className="flex flex-col gap-0.5">
-            <span className="text-[0.65rem] font-semibold uppercase tracking-[0.28em] text-muted-foreground transition-colors group-hover:text-foreground">
+            <span className="text-[0.65rem] font-semibold uppercase tracking-[0.28em] text-neutral-300 transition-colors group-hover:text-neutral-100">
               {L.portalEyebrow}
             </span>
             <BacardiWordmarkLockup text={L.brandName} className="text-2xl sm:text-3xl" />
@@ -70,22 +70,23 @@ export function BacardiLanding({ className, isAuthenticated, locale, dict }: Bac
             target="_blank"
             rel="noopener noreferrer"
             className={buttonVariants({
-              variant: "outline",
               size: "sm",
               className:
-                "min-h-10 gap-1.5 rounded-full border-primary/40 bg-transparent px-3 text-foreground no-underline hover:border-primary hover:bg-primary/10 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                "min-h-10 gap-1.5 rounded-full px-4 font-semibold text-primary-foreground no-underline shadow-md shadow-primary/25 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
             })}
           >
-            <ExternalLink className="size-3.5 shrink-0 opacity-80" aria-hidden />
+            <CalendarClock className="size-3.5 shrink-0 opacity-95" aria-hidden />
             {L.navBookings}
+            <ExternalLink className="size-3.5 shrink-0 opacity-90" aria-hidden />
           </a>
           {isAuthenticated ? (
             <Link
               href={portalHref}
               className={buttonVariants({
+                variant: "outline",
                 size: "sm",
                 className:
-                  "min-h-10 gap-1.5 rounded-full px-4 no-underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                  "min-h-10 gap-1.5 rounded-full border-primary/35 bg-transparent px-4 text-foreground no-underline hover:border-primary hover:bg-primary/10 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
               })}
             >
               {L.navCatalog}
@@ -99,7 +100,7 @@ export function BacardiLanding({ className, isAuthenticated, locale, dict }: Bac
                   variant: "ghost",
                   size: "sm",
                   className:
-                    "min-h-10 rounded-full text-muted-foreground no-underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                    "min-h-10 rounded-full text-neutral-300 no-underline hover:bg-white/[0.06] hover:text-neutral-100 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                 })}
               >
                 {L.navHow}
@@ -107,9 +108,10 @@ export function BacardiLanding({ className, isAuthenticated, locale, dict }: Bac
               <Link
                 href={loginHref}
                 className={buttonVariants({
+                  variant: "outline",
                   size: "sm",
                   className:
-                    "min-h-10 rounded-full px-4 no-underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                    "min-h-10 rounded-full border-primary/35 bg-transparent px-4 text-foreground no-underline hover:border-primary hover:bg-primary/10 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                 })}
               >
                 {L.navLogin}
@@ -128,7 +130,7 @@ export function BacardiLanding({ className, isAuthenticated, locale, dict }: Bac
           <div>
             <p
               className={cn(
-                "mb-5 inline-flex min-h-10 max-w-full flex-wrap items-center gap-2 rounded-full border border-border/80 bg-card/80 px-3 py-1.5 text-xs font-medium text-muted-foreground shadow-sm backdrop-blur-sm",
+                "mb-5 inline-flex min-h-10 max-w-full flex-wrap items-center gap-2 rounded-full border border-white/15 bg-card/85 px-3 py-1.5 text-xs font-medium text-neutral-200 shadow-sm backdrop-blur-sm",
                 "opacity-100 motion-safe:animate-landing-in motion-safe:opacity-0 motion-safe:[animation-delay:80ms]",
               )}
             >
@@ -153,7 +155,7 @@ export function BacardiLanding({ className, isAuthenticated, locale, dict }: Bac
             </h1>
             <p
               className={cn(
-                "mt-6 max-w-xl text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg",
+                "mt-6 max-w-xl text-pretty text-base leading-relaxed text-neutral-300 sm:text-lg",
                 "opacity-100 motion-safe:animate-landing-in motion-safe:opacity-0 motion-safe:[animation-delay:220ms]",
               )}
             >
@@ -165,31 +167,32 @@ export function BacardiLanding({ className, isAuthenticated, locale, dict }: Bac
                 "opacity-100 motion-safe:animate-landing-in motion-safe:opacity-0 motion-safe:[animation-delay:300ms]",
               )}
             >
-              <Link
-                href={isAuthenticated ? portalHref : loginHref}
-                className={buttonVariants({
-                  size: "lg",
-                  className:
-                    "min-h-12 gap-2 rounded-full px-8 text-base shadow-lg shadow-primary/30 no-underline transition-[transform,box-shadow] hover:shadow-xl hover:shadow-primary/25 motion-safe:active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-                })}
-              >
-                {isAuthenticated ? L.ctaEnterAuthed : L.ctaEnterGuest}
-                <ArrowRight className="size-5" aria-hidden />
-              </Link>
               <a
                 href={DEFAULT_BOOKINGS_PAGE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={buttonVariants({
+                  size: "lg",
+                  className:
+                    "min-h-12 gap-2 rounded-full px-8 text-base font-semibold text-primary-foreground no-underline shadow-lg shadow-primary/35 transition-[transform,box-shadow] hover:shadow-xl hover:shadow-primary/30 motion-safe:active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                })}
+              >
+                <CalendarClock className="size-5 shrink-0 opacity-95" aria-hidden />
+                {L.ctaBookings}
+                <ExternalLink className="size-4 shrink-0 opacity-95" aria-hidden />
+              </a>
+              <Link
+                href={isAuthenticated ? portalHref : loginHref}
+                className={buttonVariants({
                   variant: "outline",
                   size: "lg",
                   className:
-                    "min-h-12 gap-2 rounded-full border-primary/50 px-7 text-base no-underline hover:border-primary hover:bg-primary/10 motion-safe:active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                    "min-h-12 gap-2 rounded-full border-primary/45 bg-transparent px-8 text-base font-semibold no-underline hover:border-primary hover:bg-primary/10 motion-safe:active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                 })}
               >
-                <CalendarClock className="size-5 shrink-0" aria-hidden />
-                {L.ctaBookings}
-              </a>
+                {isAuthenticated ? L.ctaEnterAuthed : L.ctaEnterGuest}
+                <ArrowRight className="size-5 opacity-90" aria-hidden />
+              </Link>
               {isAuthenticated ? (
                 <Link
                   href={profileHref}
@@ -197,7 +200,7 @@ export function BacardiLanding({ className, isAuthenticated, locale, dict }: Bac
                     variant: "secondary",
                     size: "lg",
                     className:
-                      "min-h-12 rounded-full px-7 no-underline transition-[transform,box-shadow] motion-safe:active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                      "min-h-12 rounded-full border border-white/10 bg-secondary px-7 text-base font-medium text-foreground no-underline transition-[transform,box-shadow] motion-safe:active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                   })}
                 >
                   {L.ctaProfile}
@@ -209,7 +212,7 @@ export function BacardiLanding({ className, isAuthenticated, locale, dict }: Bac
                     variant: "secondary",
                     size: "lg",
                     className:
-                      "min-h-12 rounded-full px-7 no-underline transition-[transform,box-shadow] motion-safe:active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                      "min-h-12 rounded-full border border-white/10 bg-secondary px-7 text-base font-medium text-foreground no-underline transition-[transform,box-shadow] motion-safe:active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                   })}
                 >
                   {L.ctaDiscover}
@@ -223,22 +226,22 @@ export function BacardiLanding({ className, isAuthenticated, locale, dict }: Bac
               )}
             >
               <div className="sm:border-l sm:border-border/60 sm:pl-6 first:sm:border-l-0 first:sm:pl-0">
-                <dt className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                  {L.statsAccess}
-                </dt>
-                <dd className="mt-1.5 font-medium leading-snug">{L.statsAccessVal}</dd>
-              </div>
-              <div className="sm:border-l sm:border-border/60 sm:pl-6">
-                <dt className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                  {L.statsReq}
-                </dt>
-                <dd className="mt-1.5 font-medium leading-snug">{L.statsReqVal}</dd>
-              </div>
-              <div className="sm:border-l sm:border-border/60 sm:pl-6">
-                <dt className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                <dt className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
                   {L.statsBook}
                 </dt>
-                <dd className="mt-1.5 font-medium leading-snug">{L.statsBookVal}</dd>
+                <dd className="mt-1.5 font-medium leading-snug text-neutral-100">{L.statsBookVal}</dd>
+              </div>
+              <div className="sm:border-l sm:border-border/60 sm:pl-6">
+                <dt className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
+                  {L.statsReq}
+                </dt>
+                <dd className="mt-1.5 font-medium leading-snug text-neutral-100">{L.statsReqVal}</dd>
+              </div>
+              <div className="sm:border-l sm:border-border/60 sm:pl-6">
+                <dt className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
+                  {L.statsAccess}
+                </dt>
+                <dd className="mt-1.5 font-medium leading-snug text-neutral-100">{L.statsAccessVal}</dd>
               </div>
             </dl>
           </div>
@@ -258,13 +261,13 @@ export function BacardiLanding({ className, isAuthenticated, locale, dict }: Bac
                 <BacardiMark size="lg" className="scale-[2.2] blur-[1px]" />
               </div>
               <div className="absolute left-5 top-5 right-5 rounded-2xl border border-border/60 bg-background/90 p-4 shadow-sm backdrop-blur-md sm:left-6 sm:top-6 sm:right-6 sm:p-5">
-                <p className="text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+                <p className="text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-neutral-400">
                   {L.previewEyebrow}
                 </p>
                 <p className="mt-2 font-display text-2xl font-bold uppercase tracking-tight text-foreground">
                   {L.previewTitle}
                 </p>
-                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{L.previewDesc}</p>
+                <p className="mt-1.5 text-sm leading-relaxed text-neutral-300">{L.previewDesc}</p>
               </div>
               <div className="absolute bottom-5 left-5 right-5 space-y-3 rounded-2xl border border-border/60 bg-card/95 p-4 shadow-lg backdrop-blur-sm sm:bottom-6 sm:left-6 sm:right-6">
                 <div className="flex items-center justify-between gap-3">

@@ -36,7 +36,7 @@ export default async function PortalShellLayout({
             >
               <BacardiMark size="sm" className="motion-safe:transition-transform motion-safe:group-hover:scale-[1.04]" />
               <div className="hidden min-w-0 flex-col leading-tight sm:flex">
-                <span className="text-[0.55rem] font-semibold uppercase tracking-[0.22em] text-muted-foreground sm:text-[0.58rem]">
+                <span className="text-[0.55rem] font-semibold uppercase tracking-[0.22em] text-neutral-300 sm:text-[0.58rem]">
                   {nav.portalEyebrow}
                 </span>
                 <BacardiWordmarkLockup text={nav.brandName} className="text-lg sm:text-xl" />
@@ -44,34 +44,34 @@ export default async function PortalShellLayout({
             </Link>
             <Separator orientation="vertical" className="hidden h-9 sm:block" />
             <nav
-              className="hidden min-w-0 items-center gap-2 text-sm text-muted-foreground md:flex md:gap-3"
+              className="hidden min-w-0 items-center gap-2 text-sm text-neutral-300 md:flex md:gap-3"
               aria-label="Sezioni portale"
             >
-              <Link
-                className="rounded-sm whitespace-nowrap transition-colors hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
-                href={localizedPath("/portal", locale)}
-              >
-                {nav.navCatalog}
-              </Link>
-              <Link
-                className="rounded-sm whitespace-nowrap transition-colors hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
-                href={localizedPath("/portal/profile", locale)}
-              >
-                {nav.navProfile}
-              </Link>
               <a
                 href={DEFAULT_BOOKINGS_PAGE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={nav.bookingsAria}
                 className={cn(
-                  buttonVariants({ variant: "outline", size: "sm" }),
-                  "h-8 gap-1 border-primary/40 px-2.5 text-xs font-semibold text-foreground hover:bg-primary/10",
+                  buttonVariants({ size: "sm" }),
+                  "h-8 gap-1 px-2.5 text-xs font-semibold text-primary-foreground no-underline shadow-sm shadow-primary/20",
                 )}
               >
                 {nav.navBookings}
-                <ExternalLink className="size-3 opacity-80" aria-hidden />
+                <ExternalLink className="size-3 opacity-90" aria-hidden />
               </a>
+              <Link
+                className="rounded-sm whitespace-nowrap font-medium text-neutral-200 transition-colors hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+                href={localizedPath("/portal", locale)}
+              >
+                {nav.navCatalog}
+              </Link>
+              <Link
+                className="rounded-sm whitespace-nowrap font-medium text-neutral-200 transition-colors hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+                href={localizedPath("/portal/profile", locale)}
+              >
+                {nav.navProfile}
+              </Link>
               {profile?.role === "admin" ? (
                 <Link
                   className="rounded-sm whitespace-nowrap transition-colors hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
@@ -89,8 +89,8 @@ export default async function PortalShellLayout({
               target="_blank"
               rel="noopener noreferrer"
               className={cn(
-                buttonVariants({ variant: "outline", size: "sm" }),
-                "min-h-9 border-primary/40 px-2.5 md:hidden",
+                buttonVariants({ size: "sm" }),
+                "min-h-9 px-2.5 text-primary-foreground shadow-sm shadow-primary/25 md:hidden",
               )}
               aria-label={nav.bookingsAria}
             >

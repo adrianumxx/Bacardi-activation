@@ -43,7 +43,7 @@ export default async function NewCatalogPage({
           <form action={createCatalogAction} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="name">Nome trimestre</Label>
-              <Input id="name" name="name" required placeholder="Q2 2026 — Italia" />
+              <Input id="name" name="name" required placeholder="Q2 2026 — Belgium" />
             </div>
 
             <div className="grid gap-4 md:grid-cols-2">

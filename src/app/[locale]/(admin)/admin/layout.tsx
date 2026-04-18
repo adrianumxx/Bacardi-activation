@@ -34,7 +34,7 @@ export default async function AdminLayout({
             >
               <BacardiMark size="sm" />
               <div className="flex min-w-0 flex-col leading-tight">
-                <span className="text-[0.58rem] font-semibold uppercase tracking-[0.22em] text-muted-foreground transition-colors group-hover:text-foreground">
+                <span className="text-[0.58rem] font-semibold uppercase tracking-[0.22em] text-neutral-300 transition-colors group-hover:text-neutral-100">
                   {nav.eyebrow}
                 </span>
                 <span className="font-display text-xl font-extrabold uppercase tracking-tight text-foreground sm:text-2xl">
@@ -44,39 +44,39 @@ export default async function AdminLayout({
             </Link>
             <Separator orientation="vertical" className="hidden h-9 sm:block" />
             <nav
-              className="hidden items-center gap-3 text-sm text-muted-foreground sm:flex"
+              className="hidden items-center gap-3 text-sm text-neutral-300 sm:flex"
               aria-label="Sezioni admin"
             >
-              <Link
-                className="rounded-sm transition-colors hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
-                href={localizedPath("/admin/catalogs", locale)}
-              >
-                {nav.catalogs}
-              </Link>
-              <Link
-                className="rounded-sm transition-colors hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
-                href={localizedPath("/admin/users", locale)}
-              >
-                {nav.invites}
-              </Link>
-              <Link
-                className="rounded-sm transition-colors hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
-                href={localizedPath("/portal", locale)}
-              >
-                {nav.clientView}
-              </Link>
               <a
                 href={DEFAULT_BOOKINGS_PAGE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={cn(
-                  buttonVariants({ variant: "outline", size: "sm" }),
-                  "h-8 gap-1 border-primary/40 px-2.5 text-xs font-semibold text-foreground hover:bg-primary/10",
+                  buttonVariants({ size: "sm" }),
+                  "h-8 gap-1 px-2.5 text-xs font-semibold text-primary-foreground no-underline shadow-sm shadow-primary/20",
                 )}
               >
                 {portalNav.navBookings}
-                <ExternalLink className="size-3 opacity-80" aria-hidden />
+                <ExternalLink className="size-3 opacity-90" aria-hidden />
               </a>
+              <Link
+                className="rounded-sm font-medium text-neutral-200 transition-colors hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+                href={localizedPath("/admin/catalogs", locale)}
+              >
+                {nav.catalogs}
+              </Link>
+              <Link
+                className="rounded-sm font-medium text-neutral-200 transition-colors hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+                href={localizedPath("/admin/users", locale)}
+              >
+                {nav.invites}
+              </Link>
+              <Link
+                className="rounded-sm font-medium text-neutral-200 transition-colors hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+                href={localizedPath("/portal", locale)}
+              >
+                {nav.clientView}
+              </Link>
             </nav>
           </div>
           <div className="flex shrink-0 items-center gap-2">

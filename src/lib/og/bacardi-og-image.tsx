@@ -3,7 +3,7 @@ import { ImageResponse } from "next/og";
 export const OG_SIZE = { width: 1200, height: 630 } as const;
 
 export const ogImageAlt =
-  "BACARDÍ — Activation portal: quarterly catalogue, eligibility and Microsoft Bookings for the authorised Italy channel.";
+  "BACARDÍ — Activation portal: Microsoft Bookings, quarterly catalogue and eligibility for authorised Bacardi Belgium on-trade.";
 
 function siteHostLabel(): string {
   const raw = process.env.NEXT_PUBLIC_SITE_URL?.trim();
@@ -80,7 +80,7 @@ export async function createBacardiOgImageResponse() {
               fontWeight: 650,
             }}
           >
-            Italy channel activations
+            Belgium trade activations
           </div>
           <div
             style={{

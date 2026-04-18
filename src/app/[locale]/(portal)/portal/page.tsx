@@ -72,7 +72,7 @@ export default async function PortalHomePage() {
             <p className="font-display text-sm font-bold uppercase tracking-wide text-foreground">
               {H.bannerTitle}
             </p>
-            <p className="mt-1 max-w-xl text-xs leading-relaxed text-muted-foreground sm:text-sm">
+            <p className="mt-1 max-w-xl text-xs leading-relaxed text-neutral-300 sm:text-sm">
               {H.bannerDesc}
             </p>
           </div>
