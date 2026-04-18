@@ -1,17 +1,10 @@
 import type { Metadata } from "next";
-import { Instrument_Serif } from "next/font/google";
 
 import { BacardiLanding } from "@/components/landing/bacardi-landing";
 import { getOptionalUser } from "@/lib/auth/session";
 import { siteUrl } from "@/lib/env";
+import { instrumentDisplay } from "@/lib/fonts/instrument-display";
 import { cn } from "@/lib/utils";
-
-const landingDisplay = Instrument_Serif({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--font-landing-display",
-  display: "swap",
-});
 
 const title = "Attivazioni Bacardi — Portale dedicato";
 const description =
@@ -51,7 +44,7 @@ export default async function Home() {
   const user = await getOptionalUser();
 
   return (
-    <div className={cn(landingDisplay.variable, "min-h-dvh")}>
+    <div className={cn(instrumentDisplay.variable, "min-h-dvh")}>
       <BacardiLanding isAuthenticated={Boolean(user)} />
     </div>
   );

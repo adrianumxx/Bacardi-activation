@@ -4,6 +4,8 @@ import { signOut } from "@/app/actions/auth";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { requireUser, getProfileForUser } from "@/lib/auth/session";
+import { instrumentDisplay } from "@/lib/fonts/instrument-display";
+import { cn } from "@/lib/utils";
 
 export default async function PortalShellLayout({
   children,
@@ -14,37 +16,58 @@ export default async function PortalShellLayout({
   const profile = await getProfileForUser(user.id);
 
   return (
-    <div className="min-h-dvh">
-      <header className="border-b bg-card">
-        <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-4">
-          <div className="flex items-center gap-3">
-            <Link href="/portal" className="font-semibold tracking-tight">
-              Attivazioni Bacardi
+    <div className={cn(instrumentDisplay.variable, "min-h-dvh")}>
+      <header className="border-b border-border/80 bg-card/95 shadow-sm shadow-foreground/[0.03] backdrop-blur-sm">
+        <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3.5 sm:py-4">
+          <div className="flex min-w-0 items-center gap-3">
+            <Link
+              href="/portal"
+              className="group flex min-w-0 shrink-0 flex-col gap-0.5 rounded-md leading-tight focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+              aria-label="Bacardi — catalogo attivazioni"
+            >
+              <span className="text-[0.58rem] font-semibold uppercase tracking-[0.24em] text-muted-foreground transition-colors group-hover:text-foreground">
+                Portale
+              </span>
+              <span className="font-display text-xl tracking-tight text-foreground sm:text-2xl">
+                Bacardi
+              </span>
             </Link>
-            <Separator orientation="vertical" className="hidden h-6 sm:block" />
-            <nav className="hidden items-center gap-3 text-sm text-muted-foreground sm:flex">
-              <Link className="hover:text-foreground" href="/portal">
+            <Separator orientation="vertical" className="hidden h-9 sm:block" />
+            <nav
+              className="hidden min-w-0 items-center gap-3 text-sm text-muted-foreground sm:flex"
+              aria-label="Sezioni portale"
+            >
+              <Link
+                className="rounded-sm whitespace-nowrap transition-colors hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+                href="/portal"
+              >
                 Catalogo
               </Link>
-              <Link className="hover:text-foreground" href="/portal/profile">
+              <Link
+                className="rounded-sm whitespace-nowrap transition-colors hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+                href="/portal/profile"
+              >
                 Profilo
               </Link>
               {profile?.role === "admin" ? (
-                <Link className="hover:text-foreground" href="/admin">
+                <Link
+                  className="rounded-sm whitespace-nowrap transition-colors hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+                  href="/admin"
+                >
                   Admin
                 </Link>
               ) : null}
             </nav>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="hidden text-right text-xs text-muted-foreground sm:block">
-              <div className="font-medium text-foreground">
+          <div className="flex shrink-0 items-center gap-2">
+            <div className="hidden max-w-[220px] text-right text-xs text-muted-foreground lg:block">
+              <div className="truncate font-medium text-foreground">
                 {profile?.company_name?.trim() || "Cliente"}
               </div>
-              <div>{user.email}</div>
+              <div className="truncate">{user.email}</div>
             </div>
             <form action={signOut}>
-              <Button type="submit" variant="outline" size="sm">
+              <Button type="submit" variant="outline" size="sm" className="min-h-9">
                 Esci
               </Button>
             </form>

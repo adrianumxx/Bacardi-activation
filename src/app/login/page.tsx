@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Instrument_Serif } from "next/font/google";
 
 import { loginAction } from "@/app/actions/login";
 import { MarketingBackdrop } from "@/components/landing/marketing-backdrop";
@@ -7,14 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { instrumentDisplay } from "@/lib/fonts/instrument-display";
 import { cn } from "@/lib/utils";
-
-const display = Instrument_Serif({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--font-landing-display",
-  display: "swap",
-});
 
 export default async function LoginPage({
   searchParams,
@@ -35,7 +28,7 @@ export default async function LoginPage({
       : errorRaw;
 
   return (
-    <div className={cn(display.variable, "relative flex min-h-dvh flex-col text-foreground")}>
+    <div className={cn(instrumentDisplay.variable, "relative flex min-h-dvh flex-col text-foreground")}>
       <MarketingBackdrop variant="subtle" />
 
       <header className="mx-auto flex w-full max-w-md items-start justify-between gap-4 px-4 pt-8 sm:pt-10">
