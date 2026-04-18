@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
   }
 
   const redirectUrl = new URL(next, url.origin);
-  let response = NextResponse.redirect(redirectUrl);
+  const response = NextResponse.redirect(redirectUrl);
 
   const supabase = createServerClient<Database>(
     env.NEXT_PUBLIC_SUPABASE_URL,
