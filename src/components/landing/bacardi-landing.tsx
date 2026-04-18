@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, CalendarClock, ClipboardCheck, Sparkles } from "lucide-react";
+import { ArrowRight, CalendarClock, Grid3X3, LogIn, Sparkles } from "lucide-react";
 
 import { BacardiMark } from "@/components/brand/bacardi-mark";
 import { BacardiWordmarkLockup } from "@/components/brand/bacardi-wordmark-lockup";
@@ -304,7 +304,7 @@ export function BacardiLanding({ className, isAuthenticated, locale, dict }: Bac
                 aria-hidden
               />
               <div className="relative z-10 mb-4 inline-flex size-11 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-primary/15">
-                <ClipboardCheck className="size-5" aria-hidden />
+                <Grid3X3 className="size-5" aria-hidden />
               </div>
               <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                 {L.step1n}
@@ -328,7 +328,7 @@ export function BacardiLanding({ className, isAuthenticated, locale, dict }: Bac
                 aria-hidden
               />
               <div className="relative z-10 mb-4 inline-flex size-11 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-primary/15">
-                <Sparkles className="size-5" aria-hidden />
+                <LogIn className="size-5" aria-hidden />
               </div>
               <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                 {L.step2n}
