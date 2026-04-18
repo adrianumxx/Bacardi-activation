@@ -60,6 +60,10 @@ const config: Config = {
           border: "var(--sidebar-border)",
           ring: "var(--sidebar-ring)",
         },
+        bacardi: {
+          red: "var(--bacardi-red)",
+          wordmark: "var(--bacardi-wordmark)",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -70,6 +74,7 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
         display: ["var(--font-brand-display)", "system-ui", "sans-serif"],
+        heritage: ["var(--font-heritage)", "Georgia", "Times New Roman", "serif"],
       },
       keyframes: {
         "landing-in": {

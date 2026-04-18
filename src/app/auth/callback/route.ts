@@ -1,8 +1,10 @@
 import { createServerClient } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
 
+import { DEFAULT_LOCALE, LOCALES, type AppLocale } from "@/i18n/config";
 import type { Database } from "@/types/database";
 import { getPublicEnvSafe } from "@/lib/env";
+import { localePath } from "@/lib/i18n/paths";
 
 /** Origin pubblico (Vercel mette x-forwarded-host). */
 function publicOrigin(request: NextRequest): string {
@@ -14,26 +16,36 @@ function publicOrigin(request: NextRequest): string {
   return new URL(request.url).origin;
 }
 
+/** Se `path` non ha già un prefisso lingua, usa il default (es. `/portal` → `/it/portal`). */
+function withLocalePrefix(path: string): string {
+  const normalized = path.startsWith("/") ? path : `/${path}`;
+  const first = normalized.split("/")[1];
+  if (first && LOCALES.includes(first as AppLocale)) return normalized;
+  return localePath(DEFAULT_LOCALE, normalized);
+}
+
 /**
- * PKCE / magic link: i cookie di sessione devono essere applicati alla Response del redirect.
- * L’origin del redirect deve coincidere con il dominio pubblico (vedi x-forwarded-* su Vercel).
+ * PKCE / OAuth: i cookie di sessione devono essere applicati alla Response del redirect.
+ * `next` viene normalizzato con prefisso lingua se mancante.
  */
 export async function GET(request: NextRequest) {
   const env = getPublicEnvSafe();
+  const origin = publicOrigin(request);
   if (!env) {
-    return NextResponse.redirect(new URL("/configurazione", publicOrigin(request)));
+    return NextResponse.redirect(new URL(withLocalePrefix("/configurazione"), origin));
   }
 
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
   const nextRaw = url.searchParams.get("next") ?? "/portal";
-  const next = nextRaw.startsWith("/") && !nextRaw.startsWith("//") ? nextRaw : "/portal";
+  const nextClean =
+    nextRaw.startsWith("/") && !nextRaw.startsWith("//") ? nextRaw : "/portal";
+  const next = withLocalePrefix(nextClean);
 
   if (!code) {
-    return NextResponse.redirect(new URL("/login?error=auth", publicOrigin(request)));
+    return NextResponse.redirect(new URL(withLocalePrefix("/login?error=auth"), origin));
   }
 
-  const origin = publicOrigin(request);
   const redirectUrl = new URL(next, origin);
   const response = NextResponse.redirect(redirectUrl);
 
@@ -58,7 +70,10 @@ export async function GET(request: NextRequest) {
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (error) {
       return NextResponse.redirect(
-        new URL(`/login?error=${encodeURIComponent(error.message)}`, origin),
+        new URL(
+          withLocalePrefix(`/login?error=${encodeURIComponent(error.message)}`),
+          origin,
+        ),
       );
     }
 
@@ -66,7 +81,7 @@ export async function GET(request: NextRequest) {
   } catch (e) {
     const msg = e instanceof Error ? e.message : "Errore sconosciuto";
     return NextResponse.redirect(
-      new URL(`/login?error=${encodeURIComponent(msg)}`, origin),
+      new URL(withLocalePrefix(`/login?error=${encodeURIComponent(msg)}`), origin),
     );
   }
 }

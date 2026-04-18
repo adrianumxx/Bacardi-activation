@@ -4,10 +4,14 @@ import { redirect } from "next/navigation";
 
 import { requireAdmin } from "@/lib/auth/session";
 import { siteUrl } from "@/lib/env";
+import { getLocale, localizedPath } from "@/lib/i18n/server";
+import { localePath } from "@/lib/i18n/paths";
 import { createServiceRoleClient } from "@/lib/supabase/service";
 
 export async function inviteClientByEmail(email: string) {
   await requireAdmin();
+  const locale = getLocale();
+  const next = encodeURIComponent(localePath(locale, "/portal"));
 
   const trimmed = email.trim().toLowerCase();
   if (!trimmed.includes("@")) {
@@ -17,7 +21,7 @@ export async function inviteClientByEmail(email: string) {
   try {
     const admin = createServiceRoleClient();
     const { error } = await admin.auth.admin.inviteUserByEmail(trimmed, {
-      redirectTo: `${siteUrl()}/auth/callback`,
+      redirectTo: `${siteUrl()}/auth/callback?next=${next}`,
     });
     if (error) {
       return { ok: false as const, error: error.message };
@@ -35,6 +39,7 @@ export async function inviteClientByEmail(email: string) {
 export async function inviteClientAction(formData: FormData) {
   const email = String(formData.get("email") ?? "");
   const res = await inviteClientByEmail(email);
-  if (res.ok) redirect("/admin/users?invited=1");
-  redirect(`/admin/users?error=${encodeURIComponent(res.error)}`);
+  const loc = getLocale();
+  if (res.ok) redirect(localizedPath("/admin/users?invited=1", loc));
+  redirect(localizedPath(`/admin/users?error=${encodeURIComponent(res.error)}`, loc));
 }

@@ -3,22 +3,22 @@ import { ImageResponse } from "next/og";
 export const OG_SIZE = { width: 1200, height: 630 } as const;
 
 export const ogImageAlt =
-  "Bacardi — Portale attivazioni: catalogo, requisiti e Microsoft Bookings per il canale Italia.";
+  "BACARDÍ — Activation portal: quarterly catalogue, eligibility and Microsoft Bookings for the authorised Italy channel.";
 
 function siteHostLabel(): string {
   const raw = process.env.NEXT_PUBLIC_SITE_URL?.trim();
-  if (!raw) return "Portale attivazioni";
+  if (!raw) return "Activation portal";
   try {
     const withScheme = /^https?:\/\//i.test(raw) ? raw : `https://${raw}`;
     return new URL(withScheme).host;
   } catch {
-    return "Portale attivazioni";
+    return "Activation portal";
   }
 }
 
 /**
  * Immagine social 1200×630 (Open Graph / Twitter).
- * Palette Bacardi: nero, rosso #D71920, tipografia sans pesante.
+ * Allineamento palette BACARDÍ: nero, rosso primario #D91E27, display sans pesante (stile consumer).
  */
 export async function createBacardiOgImageResponse() {
   const domainLabel = siteHostLabel();
@@ -45,7 +45,7 @@ export async function createBacardiOgImageResponse() {
             width: 560,
             height: 560,
             borderRadius: "50%",
-            background: "rgba(215, 25, 32, 0.35)",
+            background: "rgba(217, 30, 39, 0.35)",
           }}
         />
         <div
@@ -56,7 +56,7 @@ export async function createBacardiOgImageResponse() {
             width: 420,
             height: 420,
             borderRadius: "50%",
-            background: "rgba(215, 25, 32, 0.15)",
+            background: "rgba(217, 30, 39, 0.15)",
           }}
         />
 
@@ -80,20 +80,20 @@ export async function createBacardiOgImageResponse() {
               fontWeight: 650,
             }}
           >
-            Portale attivazioni
+            Italy channel activations
           </div>
           <div
             style={{
               marginTop: 20,
-              fontSize: 88,
-              lineHeight: 0.9,
-              letterSpacing: "-0.04em",
+              fontSize: 82,
+              lineHeight: 0.92,
+              letterSpacing: "-0.03em",
               color: "#fafafa",
               fontWeight: 900,
               textTransform: "uppercase" as const,
             }}
           >
-            Bacardi
+            BACARDÍ
           </div>
           <div
             style={{
@@ -105,7 +105,7 @@ export async function createBacardiOgImageResponse() {
               maxWidth: 860,
             }}
           >
-            Catalogo trimestre, requisiti in chiaro e Microsoft Bookings — canale Italia.
+            Quarterly catalogue, clear eligibility and Microsoft Bookings — authorised trade only.
           </div>
           <div
             style={{
@@ -120,7 +120,7 @@ export async function createBacardiOgImageResponse() {
                 width: 10,
                 height: 10,
                 borderRadius: 999,
-                background: "#d71920",
+                background: "#d91e27",
               }}
             />
             <div style={{ fontSize: 17, color: "#a3a3a3", fontWeight: 550 }}>{domainLabel}</div>
@@ -131,7 +131,7 @@ export async function createBacardiOgImageResponse() {
           style={{
             height: 10,
             width: "100%",
-            background: "#d71920",
+            background: "#d91e27",
             zIndex: 2,
           }}
         />

@@ -58,41 +58,47 @@ export function isSupabaseConfigured(): boolean {
   return getPublicEnvSafe() !== null;
 }
 
-/**
- * Messaggi operativi (IT) quando Supabase non è ancora configurato — utile in UI login.
- * Non espone segreti, solo cosa correggere.
- */
-export function explainSupabaseEnvIssues(): string[] {
+/** Codici problema env (traduzione lato UI / i18n). */
+export type SupabaseEnvIssueKind =
+  | "missing_url"
+  | "invalid_url"
+  | "non_https_url"
+  | "missing_anon_key"
+  | "short_anon_key"
+  | "unknown";
+
+/** Elenco problemi rilevati sulle variabili pubbliche Supabase (nessun segreto in output). */
+export function getSupabaseEnvIssueKinds(): SupabaseEnvIssueKind[] {
   if (getPublicEnvSafe()) return [];
 
-  const issues: string[] = [];
+  const kinds: SupabaseEnvIssueKind[] = [];
   const supabaseUrl = trimUrl(process.env.NEXT_PUBLIC_SUPABASE_URL);
   const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim();
 
   if (!supabaseUrl) {
-    issues.push("Crea il file .env.local nella cartella del progetto e imposta NEXT_PUBLIC_SUPABASE_URL.");
+    kinds.push("missing_url");
   } else {
     try {
       const u = new URL(supabaseUrl);
       if (u.protocol !== "https:") {
-        issues.push("NEXT_PUBLIC_SUPABASE_URL deve usare https:// (es. https://xxxx.supabase.co).");
+        kinds.push("non_https_url");
       }
     } catch {
-      issues.push("NEXT_PUBLIC_SUPABASE_URL non è un URL valido.");
+      kinds.push("invalid_url");
     }
   }
 
   if (!anonKey) {
-    issues.push("Imposta NEXT_PUBLIC_SUPABASE_ANON_KEY in .env.local (Supabase → Project Settings → API → anon public).");
+    kinds.push("missing_anon_key");
   } else if (anonKey.length < 20) {
-    issues.push("La chiave anon sembra troncata: incolla la stringa completa “anon public” dal dashboard Supabase.");
+    kinds.push("short_anon_key");
   }
 
-  if (issues.length === 0) {
-    issues.push("Controlla NEXT_PUBLIC_SUPABASE_URL e NEXT_PUBLIC_SUPABASE_ANON_KEY in .env.local.");
+  if (kinds.length === 0) {
+    kinds.push("unknown");
   }
 
-  return issues;
+  return kinds;
 }
 
 export function getPublicEnv(): PublicEnv {

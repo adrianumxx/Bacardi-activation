@@ -2,88 +2,96 @@
 
 import { redirect } from "next/navigation";
 
+import { getDictionary } from "@/i18n/get-dictionary";
 import { isSupabaseConfigured, siteUrl } from "@/lib/env";
+import { getLocale, localizedPath } from "@/lib/i18n/server";
+import { localePath } from "@/lib/i18n/paths";
 import { createClient } from "@/lib/supabase/server";
 
-function loginError(message: string): never {
-  redirect(`/login?error=${encodeURIComponent(message)}`);
+function redirectLoginError(message: string): never {
+  const locale = getLocale();
+  redirect(localizedPath(`/login?error=${encodeURIComponent(message)}`, locale));
 }
 
-function registerError(message: string): never {
-  redirect(`/register?error=${encodeURIComponent(message)}`);
+function redirectRegisterError(message: string): never {
+  const locale = getLocale();
+  redirect(localizedPath(`/register?error=${encodeURIComponent(message)}`, locale));
 }
 
 async function requireSupabaseForAuth() {
   if (!isSupabaseConfigured()) {
-    loginError(
-      "Supabase non configurato: aggiungi NEXT_PUBLIC_SUPABASE_URL e NEXT_PUBLIC_SUPABASE_ANON_KEY in .env.local nella radice del progetto, poi riavvia `npm run dev`.",
-    );
+    const dict = await getDictionary(getLocale());
+    redirectLoginError(dict.authCredentials.supabaseMissingLogin);
   }
   return createClient();
 }
 
 export async function loginWithPasswordAction(formData: FormData) {
+  const dict = await getDictionary(getLocale());
+  const locale = getLocale();
   const email = String(formData.get("email") ?? "")
     .trim()
     .toLowerCase();
   const password = String(formData.get("password") ?? "");
 
-  if (!email.includes("@")) loginError("Inserisci un indirizzo email valido.");
-  if (password.length < 6) loginError("La password deve avere almeno 6 caratteri.");
+  if (!email.includes("@")) redirectLoginError(dict.authCredentials.invalidEmail);
+  if (password.length < 6) redirectLoginError(dict.authCredentials.passwordMin);
 
   const supabase = await requireSupabaseForAuth();
   const { error } = await supabase.auth.signInWithPassword({ email, password });
-  if (error) loginError(error.message);
-  redirect("/portal");
+  if (error) redirectLoginError(error.message);
+  redirect(localizedPath("/portal", locale));
 }
 
 export async function signInWithGoogleAction() {
+  const dict = await getDictionary(getLocale());
+  const locale = getLocale();
   const supabase = await requireSupabaseForAuth();
   const origin = siteUrl();
+  const next = encodeURIComponent(localePath(locale, "/portal"));
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${origin}/auth/callback`,
+      redirectTo: `${origin}/auth/callback?next=${next}`,
       queryParams: { access_type: "online", prompt: "select_account" },
     },
   });
-  if (error) loginError(error.message);
+  if (error) redirectLoginError(error.message);
   const url = data.url;
   if (!url) {
-    loginError(
-      "Impossibile avviare Google: verifica il provider in Supabase (Authentication → Providers → Google).",
-    );
+    redirectLoginError(dict.authCredentials.googleStartFailed);
   }
   redirect(url);
 }
 
 export async function registerWithPasswordAction(formData: FormData) {
+  const dict = await getDictionary(getLocale());
+  const locale = getLocale();
   const email = String(formData.get("email") ?? "")
     .trim()
     .toLowerCase();
   const password = String(formData.get("password") ?? "");
   const confirm = String(formData.get("confirm") ?? "");
 
-  if (!email.includes("@")) registerError("Inserisci un indirizzo email valido.");
-  if (password.length < 6) registerError("La password deve avere almeno 6 caratteri.");
-  if (password !== confirm) registerError("Le password non coincidono.");
+  if (!email.includes("@")) redirectRegisterError(dict.authCredentials.invalidEmail);
+  if (password.length < 6) redirectRegisterError(dict.authCredentials.passwordMin);
+  if (password !== confirm) redirectRegisterError(dict.authCredentials.passwordMismatch);
 
   if (!isSupabaseConfigured()) {
-    registerError(
-      "Supabase non configurato: aggiungi NEXT_PUBLIC_SUPABASE_URL e NEXT_PUBLIC_SUPABASE_ANON_KEY in .env.local, poi riavvia il server di sviluppo.",
-    );
+    redirectRegisterError(dict.authCredentials.supabaseMissingRegister);
   }
 
   const supabase = await createClient();
+  const next = encodeURIComponent(localePath(locale, "/portal"));
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
-      emailRedirectTo: `${siteUrl()}/auth/callback`,
+      emailRedirectTo: `${siteUrl()}/auth/callback?next=${next}`,
     },
   });
 
-  if (error) registerError(error.message);
-  if (data.session) redirect("/portal");
-  redirect("/login?registered=1");
+  if (error) redirectRegisterError(error.message);
+  if (data.session) redirect(localizedPath("/portal", locale));
+  redirect(localizedPath("/login?registered=1", locale));
 }

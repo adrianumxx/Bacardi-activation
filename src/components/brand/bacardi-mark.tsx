@@ -1,6 +1,9 @@
 import { cn } from "@/lib/utils";
 
-/** Marchio stilizzato (cerchio Bacardi + lettera) — allineato ai colori ufficiali su fondo scuro. */
+/**
+ * Segno stilizzato ispirato al tondo BACARDÍ (anelli bianco / nero / bianco attorno al rosso primario).
+ * Non riproduce il pipistrello ufficiale — per asset marchio usare il DAM / brand center.
+ */
 export function BacardiMark({ className, size = "md" }: { className?: string; size?: "sm" | "md" | "lg" }) {
   const dim = size === "sm" ? 40 : size === "lg" ? 72 : 52;
   return (
@@ -12,16 +15,18 @@ export function BacardiMark({ className, size = "md" }: { className?: string; si
       className={cn("shrink-0", className)}
       aria-hidden
     >
-      <circle cx="50" cy="50" r="46" fill="#D71920" />
-      <circle cx="50" cy="50" r="41.5" fill="none" stroke="#ffffff" strokeWidth="2.2" />
-      <circle cx="50" cy="50" r="48.5" fill="none" stroke="#0a0a0a" strokeWidth="2.8" />
+      {/* Anelli concentrici: bianco → nero → bianco (sopra fondo scuro si legge il bordo esterno chiaro) */}
+      <circle cx="50" cy="50" r="49.2" fill="#ffffff" />
+      <circle cx="50" cy="50" r="47.4" fill="#0a0a0a" />
+      <circle cx="50" cy="50" r="45.6" fill="#ffffff" />
+      <circle cx="50" cy="50" r="43.4" fill="var(--bacardi-red, #d91e27)" />
       <text
         x="50"
-        y="58"
+        y="57"
         textAnchor="middle"
-        fontSize="38"
+        fontSize="34"
         fontWeight="900"
-        fontFamily="system-ui, -apple-system, Segoe UI, sans-serif"
+        fontFamily="var(--font-brand-display), system-ui, sans-serif"
         fill="#0a0a0a"
         letterSpacing="-0.06em"
       >

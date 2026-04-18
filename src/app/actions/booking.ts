@@ -1,11 +1,14 @@
 "use server";
 
+import { getDictionary } from "@/i18n/get-dictionary";
 import { requireUser } from "@/lib/auth/session";
 import { resolveBookingsUrl } from "@/lib/bookings-default";
+import { getLocale } from "@/lib/i18n/server";
 import { evaluateActivationEligibility } from "@/lib/requirements/activation";
 import { createClient } from "@/lib/supabase/server";
 
 export async function logBookingClick(activationId: string) {
+  const dict = await getDictionary(getLocale());
   const user = await requireUser();
   const supabase = await createClient();
 
@@ -16,7 +19,7 @@ export async function logBookingClick(activationId: string) {
     .maybeSingle();
 
   if (actErr || !activation) {
-    return { ok: false as const, error: "Attivazione non trovata." };
+    return { ok: false as const, error: dict.booking.notFound };
   }
 
   const bookingsUrl = resolveBookingsUrl(activation.bookings_url);
@@ -35,7 +38,7 @@ export async function logBookingClick(activationId: string) {
   if (!eligibility.ok) {
     return {
       ok: false as const,
-      error: "Non sei idoneo per questa attivazione. Aggiorna il profilo o verifica i requisiti.",
+      error: dict.booking.notEligible,
     };
   }
 
@@ -45,7 +48,7 @@ export async function logBookingClick(activationId: string) {
   });
 
   if (insErr) {
-    return { ok: false as const, error: "Impossibile registrare il click. Riprova." };
+    return { ok: false as const, error: dict.booking.logFail };
   }
 
   return { ok: true as const, url: bookingsUrl };

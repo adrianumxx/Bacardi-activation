@@ -1,9 +1,9 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { requireAdmin } from "@/lib/auth/session";
+import { getLocale, localizedPath, revalidateAppPath } from "@/lib/i18n/server";
 import { requirementsPayloadSchema } from "@/lib/zod/requirements";
 import { createClient } from "@/lib/supabase/server";
 import type { ActivationType } from "@/types/database";
@@ -51,8 +51,8 @@ export async function createActivation(catalogId: string, formData: FormData) {
 
   if (error || !data) return { ok: false as const, error: error?.message ?? "Errore DB." };
 
-  revalidatePath(`/admin/catalogs/${catalogId}`);
-  revalidatePath("/portal");
+  revalidateAppPath(`/admin/catalogs/${catalogId}`);
+  revalidateAppPath("/portal");
   return { ok: true as const, id: data.id };
 }
 
@@ -102,9 +102,9 @@ export async function updateActivation(
 
   if (error) return { ok: false as const, error: error.message };
 
-  revalidatePath(`/admin/catalogs/${catalogId}`);
-  revalidatePath("/portal");
-  revalidatePath(`/portal/activations/${activationId}`);
+  revalidateAppPath(`/admin/catalogs/${catalogId}`);
+  revalidateAppPath("/portal");
+  revalidateAppPath(`/portal/activations/${activationId}`);
   return { ok: true as const };
 }
 
@@ -119,16 +119,20 @@ export async function deleteActivation(catalogId: string, activationId: string) 
 
   if (error) return { ok: false as const, error: error.message };
 
-  revalidatePath(`/admin/catalogs/${catalogId}`);
-  revalidatePath("/portal");
+  revalidateAppPath(`/admin/catalogs/${catalogId}`);
+  revalidateAppPath("/portal");
   return { ok: true as const };
 }
 
 export async function createActivationAction(catalogId: string, formData: FormData) {
+  const locale = getLocale();
   const res = await createActivation(catalogId, formData);
-  if (res.ok) redirect(`/admin/catalogs/${catalogId}?createdActivation=1`);
+  if (res.ok) redirect(localizedPath(`/admin/catalogs/${catalogId}?createdActivation=1`, locale));
   redirect(
-    `/admin/catalogs/${catalogId}/activations/new?error=${encodeURIComponent(res.error)}`,
+    localizedPath(
+      `/admin/catalogs/${catalogId}/activations/new?error=${encodeURIComponent(res.error)}`,
+      locale,
+    ),
   );
 }
 
@@ -137,17 +141,25 @@ export async function updateActivationAction(
   activationId: string,
   formData: FormData,
 ) {
+  const locale = getLocale();
   const res = await updateActivation(catalogId, activationId, formData);
-  if (res.ok) redirect(`/admin/catalogs/${catalogId}?savedActivation=1`);
+  if (res.ok) redirect(localizedPath(`/admin/catalogs/${catalogId}?savedActivation=1`, locale));
   redirect(
-    `/admin/catalogs/${catalogId}/activations/${activationId}?error=${encodeURIComponent(res.error)}`,
+    localizedPath(
+      `/admin/catalogs/${catalogId}/activations/${activationId}?error=${encodeURIComponent(res.error)}`,
+      locale,
+    ),
   );
 }
 
 export async function deleteActivationAction(catalogId: string, activationId: string) {
+  const locale = getLocale();
   const res = await deleteActivation(catalogId, activationId);
-  if (res.ok) redirect(`/admin/catalogs/${catalogId}?deletedActivation=1`);
+  if (res.ok) redirect(localizedPath(`/admin/catalogs/${catalogId}?deletedActivation=1`, locale));
   redirect(
-    `/admin/catalogs/${catalogId}/activations/${activationId}?error=${encodeURIComponent(res.error)}`,
+    localizedPath(
+      `/admin/catalogs/${catalogId}/activations/${activationId}?error=${encodeURIComponent(res.error)}`,
+      locale,
+    ),
   );
 }

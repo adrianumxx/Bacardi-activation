@@ -9,8 +9,70 @@
     text-wrap: balance;
   }
 
+  /* Selettore lingua: slab 3D + bagliore Bacardi (rispetta prefers-reduced-motion via classi motion-safe sul blocco) */
+  .locale-dash-rail {
+    transform-style: preserve-3d;
+    perspective: 920px;
+  }
+
+  .locale-dash-segment {
+    transform-style: preserve-3d;
+    transform: translate3d(0, 0, 0) rotateX(0deg);
+    transition:
+      transform 0.42s cubic-bezier(0.33, 1.45, 0.36, 1),
+      box-shadow 0.4s ease,
+      background-color 0.28s ease,
+      color 0.22s ease,
+      border-color 0.22s ease;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .locale-dash-segment:hover {
+      transform: translate3d(0, 0, 12px) rotateX(-10deg);
+      box-shadow:
+        0 18px 42px -14px rgb(var(--bacardi-red-rgb) / 0.42),
+        0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+
+    .locale-dash-segment--active {
+      transform: translate3d(0, 0, 18px) rotateX(0deg) scale(1.05);
+      box-shadow:
+        0 22px 50px -16px rgb(var(--bacardi-red-rgb) / 0.58),
+        0 0 0 1px rgba(255, 255, 255, 0.14),
+        inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    }
+
+    .locale-dash-shell {
+      animation: locale-dash-breathe 6s ease-in-out infinite;
+    }
+  }
+
+  @keyframes locale-dash-breathe {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) rotateX(0deg);
+      filter: drop-shadow(0 0 0 transparent);
+    }
+    50% {
+      transform: translate3d(0, -1px, 0) rotateX(1deg);
+      filter: drop-shadow(0 10px 28px rgb(var(--bacardi-red-rgb) / 0.22));
+    }
+  }
+
   .bg-landing-noise {
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /**
+   * Wordmark “nero su nero” come lockup consumer (≈#1A1A1A): bordo luminoso
+   * microscopico per leggibilità su schermo OLED / #000.
+   */
+  .bacardi-lockup-wordmark {
+    color: var(--bacardi-wordmark);
+    text-shadow:
+      0 0 1px rgb(255 255 255 / 0.14),
+      0 0 20px rgb(255 255 255 / 0.06),
+      0 1px 0 rgb(255 255 255 / 0.05);
   }
 }
 
@@ -20,15 +82,21 @@
     --font-sans: var(--font-sans);
   }
 
-  /* Bacardi: nero profondo, rosso ufficiale #D71920, bianco / grigi per testo */
+  /*
+   * Palette da lockup BACARDÍ (consumer): nero #000, rosso primario ≈#D91E27,
+   * wordmark carbone ≈#1A1A1A, bianco per anelli / contrasto CTA.
+   */
   :root {
+    --bacardi-red: #d91e27;
+    --bacardi-red-rgb: 217 30 39;
+    --bacardi-wordmark: #1a1a1a;
     --background: #000000;
     --foreground: #fafafa;
     --card: #0c0c0c;
     --card-foreground: #fafafa;
     --popover: #0c0c0c;
     --popover-foreground: #fafafa;
-    --primary: #d71920;
+    --primary: var(--bacardi-red);
     --primary-foreground: #ffffff;
     --secondary: #171717;
     --secondary-foreground: #fafafa;
@@ -40,8 +108,8 @@
     --destructive-foreground: #ffffff;
     --border: rgba(255, 255, 255, 0.1);
     --input: rgba(255, 255, 255, 0.12);
-    --ring: #d71920;
-    --chart-1: #d71920;
+    --ring: var(--bacardi-red);
+    --chart-1: var(--bacardi-red);
     --chart-2: #737373;
     --chart-3: #525252;
     --chart-4: #404040;
@@ -49,22 +117,25 @@
     --radius: 0.5rem;
     --sidebar: #0a0a0a;
     --sidebar-foreground: #fafafa;
-    --sidebar-primary: #d71920;
+    --sidebar-primary: var(--bacardi-red);
     --sidebar-primary-foreground: #ffffff;
     --sidebar-accent: #171717;
     --sidebar-accent-foreground: #fafafa;
     --sidebar-border: rgba(255, 255, 255, 0.08);
-    --sidebar-ring: #d71920;
+    --sidebar-ring: var(--bacardi-red);
   }
 
   .dark {
+    --bacardi-red: #d91e27;
+    --bacardi-red-rgb: 217 30 39;
+    --bacardi-wordmark: #1a1a1a;
     --background: #000000;
     --foreground: #fafafa;
     --card: #0c0c0c;
     --card-foreground: #fafafa;
     --popover: #0c0c0c;
     --popover-foreground: #fafafa;
-    --primary: #d71920;
+    --primary: var(--bacardi-red);
     --primary-foreground: #ffffff;
     --secondary: #171717;
     --secondary-foreground: #fafafa;
@@ -76,20 +147,20 @@
     --destructive-foreground: #ffffff;
     --border: rgba(255, 255, 255, 0.1);
     --input: rgba(255, 255, 255, 0.12);
-    --ring: #d71920;
-    --chart-1: #d71920;
+    --ring: var(--bacardi-red);
+    --chart-1: var(--bacardi-red);
     --chart-2: #737373;
     --chart-3: #525252;
     --chart-4: #404040;
     --chart-5: #262626;
     --sidebar: #0a0a0a;
     --sidebar-foreground: #fafafa;
-    --sidebar-primary: #d71920;
+    --sidebar-primary: var(--bacardi-red);
     --sidebar-primary-foreground: #ffffff;
     --sidebar-accent: #171717;
     --sidebar-accent-foreground: #fafafa;
     --sidebar-border: rgba(255, 255, 255, 0.08);
-    --sidebar-ring: #d71920;
+    --sidebar-ring: var(--bacardi-red);
   }
 
   * {

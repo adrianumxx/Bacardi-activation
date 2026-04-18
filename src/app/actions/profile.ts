@@ -1,11 +1,11 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { createClient } from "@/lib/supabase/server";
 import { attributeSchemaPayload } from "@/lib/zod/catalog";
 import { requireUser } from "@/lib/auth/session";
+import { getLocale, localizedPath, revalidateAppPath } from "@/lib/i18n/server";
 
 function coerceValue(
   type: "string" | "number" | "boolean",
@@ -73,13 +73,14 @@ export async function updateClientProfile(formData: FormData) {
 
   if (aErr) return { ok: false as const, error: "Salvataggio attributi fallito." };
 
-  revalidatePath("/portal");
-  revalidatePath("/portal/profile");
+  revalidateAppPath("/portal");
+  revalidateAppPath("/portal/profile");
   return { ok: true as const };
 }
 
 export async function updateClientProfileAction(formData: FormData) {
   const res = await updateClientProfile(formData);
-  if (res.ok) redirect("/portal/profile?saved=1");
-  redirect(`/portal/profile?error=${encodeURIComponent(res.error)}`);
+  const locale = getLocale();
+  if (res.ok) redirect(localizedPath("/portal/profile?saved=1", locale));
+  redirect(localizedPath(`/portal/profile?error=${encodeURIComponent(res.error)}`, locale));
 }

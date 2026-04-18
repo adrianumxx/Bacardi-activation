@@ -9,9 +9,15 @@ import { Button } from "@/components/ui/button";
 export function BookingsCta({
   activationId,
   disabled,
+  toastOk,
+  ctaLabel,
+  ctaLoading,
 }: {
   activationId: string;
   disabled: boolean;
+  toastOk: string;
+  ctaLabel: string;
+  ctaLoading: string;
 }) {
   const [loading, setLoading] = useState(false);
 
@@ -27,14 +33,14 @@ export function BookingsCta({
             toast.error(res.error);
             return;
           }
-          toast.success("Apri Outlook per completare la prenotazione.");
+          toast.success(toastOk);
           window.open(res.url, "_blank", "noopener,noreferrer");
         } finally {
           setLoading(false);
         }
       }}
     >
-      {loading ? "Apertura…" : "Prenota su Bookings"}
+      {loading ? ctaLoading : ctaLabel}
     </Button>
   );
 }

@@ -1,16 +1,18 @@
 import { redirect } from "next/navigation";
 
+import { getLocale, localizedPath } from "@/lib/i18n/server";
 import { isSupabaseConfigured } from "@/lib/env";
 import { createClient } from "@/lib/supabase/server";
 import type { UserRole } from "@/types/database";
 
 export async function requireUser() {
-  if (!isSupabaseConfigured()) redirect("/configurazione");
+  const locale = await getLocale();
+  if (!isSupabaseConfigured()) redirect(localizedPath("/configurazione", locale));
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (!user) redirect("/login");
+  if (!user) redirect(localizedPath("/login", locale));
   return user;
 }
 
@@ -37,6 +39,7 @@ export async function getProfileForUser(userId: string) {
 export async function requireAdmin() {
   const user = await requireUser();
   const profile = await getProfileForUser(user.id);
-  if (profile?.role !== "admin") redirect("/portal");
+  const locale = await getLocale();
+  if (profile?.role !== "admin") redirect(localizedPath("/portal", locale));
   return { user, profile, role: profile.role as UserRole };
 }

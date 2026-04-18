@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DM_Sans, Montserrat } from "next/font/google";
+import { DM_Sans, Montserrat, Playfair_Display } from "next/font/google";
 
 import "./globals.css";
 import { Providers } from "@/components/providers";
@@ -19,6 +19,14 @@ const montserrat = Montserrat({
   display: "swap",
 });
 
+/** Serif di supporto (vicina al wordmark heritage) — linee legali / citazioni. */
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "600"],
+  variable: "--font-heritage",
+  display: "swap",
+});
+
 function metadataBaseUrl(): URL {
   try {
     return new URL(siteUrl());
@@ -29,9 +37,9 @@ function metadataBaseUrl(): URL {
 
 export const metadata: Metadata = {
   metadataBase: metadataBaseUrl(),
-  title: "Portale attivazioni — Bacardi",
+  title: "BACARDÍ — Portale attivazioni canale Italia",
   description:
-    "Prenotazione attivazioni per clienti: requisiti, idoneità e Microsoft Bookings.",
+    "Catalogo attivazioni, criteri di idoneità e Microsoft Bookings per il trade italiano autorizzato (Bacardi Limited).",
 };
 
 export default function RootLayout({
@@ -41,7 +49,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="it" className="dark" suppressHydrationWarning>
-      <body className={cn("min-h-dvh bg-background text-foreground", dmSans.variable, montserrat.variable)}>
+      <body
+        className={cn(
+          "min-h-dvh bg-background text-foreground",
+          dmSans.variable,
+          montserrat.variable,
+          playfair.variable,
+        )}
+      >
         <Providers>{children}</Providers>
       </body>
     </html>

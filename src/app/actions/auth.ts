@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 
 import { isSupabaseConfigured } from "@/lib/env";
+import { getLocale, localizedPath } from "@/lib/i18n/server";
 import { createClient } from "@/lib/supabase/server";
 
 export async function signOut() {
@@ -14,5 +15,5 @@ export async function signOut() {
       /* session già assente o cookie non scrivibili */
     }
   }
-  redirect("/login");
+  redirect(localizedPath("/login", getLocale()));
 }

@@ -1,10 +1,10 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { requireAdmin } from "@/lib/auth/session";
 import { attributeSchemaPayload } from "@/lib/zod/catalog";
+import { getLocale, localizedPath, revalidateAppPath } from "@/lib/i18n/server";
 import { createClient } from "@/lib/supabase/server";
 
 export async function createCatalog(formData: FormData) {
@@ -40,7 +40,7 @@ export async function createCatalog(formData: FormData) {
 
   if (error || !data) return { ok: false as const, error: error?.message ?? "Errore DB." };
 
-  revalidatePath("/admin/catalogs");
+  revalidateAppPath("/admin/catalogs");
   return { ok: true as const, id: data.id };
 }
 
@@ -76,8 +76,8 @@ export async function updateCatalog(catalogId: string, formData: FormData) {
 
   if (error) return { ok: false as const, error: error.message };
 
-  revalidatePath("/admin/catalogs");
-  revalidatePath(`/admin/catalogs/${catalogId}`);
+  revalidateAppPath("/admin/catalogs");
+  revalidateAppPath(`/admin/catalogs/${catalogId}`);
   return { ok: true as const };
 }
 
@@ -141,29 +141,35 @@ export async function cloneCatalog(sourceCatalogId: string, formData: FormData) 
     if (copyErr) return { ok: false as const, error: copyErr.message };
   }
 
-  revalidatePath("/admin/catalogs");
-  revalidatePath(`/admin/catalogs/${created.id}`);
+  revalidateAppPath("/admin/catalogs");
+  revalidateAppPath(`/admin/catalogs/${created.id}`);
   return { ok: true as const, id: created.id };
 }
 
 export async function createCatalogAction(formData: FormData) {
+  const locale = getLocale();
   const res = await createCatalog(formData);
-  if (res.ok) redirect(`/admin/catalogs/${res.id}`);
-  redirect(`/admin/catalogs/new?error=${encodeURIComponent(res.error)}`);
+  if (res.ok) redirect(localizedPath(`/admin/catalogs/${res.id}`, locale));
+  redirect(localizedPath(`/admin/catalogs/new?error=${encodeURIComponent(res.error)}`, locale));
 }
 
 export async function updateCatalogAction(catalogId: string, formData: FormData) {
+  const locale = getLocale();
   const res = await updateCatalog(catalogId, formData);
-  if (res.ok) redirect(`/admin/catalogs/${catalogId}?saved=1`);
+  if (res.ok) redirect(localizedPath(`/admin/catalogs/${catalogId}?saved=1`, locale));
   redirect(
-    `/admin/catalogs/${catalogId}?error=${encodeURIComponent(res.error)}`,
+    localizedPath(`/admin/catalogs/${catalogId}?error=${encodeURIComponent(res.error)}`, locale),
   );
 }
 
 export async function cloneCatalogAction(sourceCatalogId: string, formData: FormData) {
+  const locale = getLocale();
   const res = await cloneCatalog(sourceCatalogId, formData);
-  if (res.ok) redirect(`/admin/catalogs/${res.id}?cloned=1`);
+  if (res.ok) redirect(localizedPath(`/admin/catalogs/${res.id}?cloned=1`, locale));
   redirect(
-    `/admin/catalogs/${sourceCatalogId}?error=${encodeURIComponent(res.error)}`,
+    localizedPath(
+      `/admin/catalogs/${sourceCatalogId}?error=${encodeURIComponent(res.error)}`,
+      locale,
+    ),
   );
 }
