@@ -1,37 +1,27 @@
+import Image from "next/image";
+
 import { cn } from "@/lib/utils";
 
+const BOLLINO_SRC = "/brand/bacardi-bollino.svg";
+
+const dimMap = { sm: 40, md: 52, lg: 72 } as const;
+
 /**
- * Segno stilizzato ispirato al tondo BACARDÍ (anelli bianco / nero / bianco attorno al rosso primario).
- * Non riproduce il pipistrello ufficiale — per asset marchio usare il DAM / brand center.
+ * Bollino BACARDÍ (SVG vettoriale, fondo trasparente fuori dal tondo).
+ * Sostituisci `public/brand/bacardi-bollino.svg` con il file ufficiale dal brand center se richiesto.
  */
 export function BacardiMark({ className, size = "md" }: { className?: string; size?: "sm" | "md" | "lg" }) {
-  const dim = size === "sm" ? 40 : size === "lg" ? 72 : 52;
+  const dim = dimMap[size];
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 100 100"
+    <Image
+      src={BOLLINO_SRC}
       width={dim}
       height={dim}
-      className={cn("shrink-0", className)}
+      alt=""
+      unoptimized
+      priority={false}
+      className={cn("shrink-0 select-none object-contain", className)}
       aria-hidden
-    >
-      {/* Anelli concentrici: bianco → nero → bianco (sopra fondo scuro si legge il bordo esterno chiaro) */}
-      <circle cx="50" cy="50" r="49.2" fill="#ffffff" />
-      <circle cx="50" cy="50" r="47.4" fill="#0a0a0a" />
-      <circle cx="50" cy="50" r="45.6" fill="#ffffff" />
-      <circle cx="50" cy="50" r="43.4" fill="var(--bacardi-red, #d91e27)" />
-      <text
-        x="50"
-        y="57"
-        textAnchor="middle"
-        fontSize="34"
-        fontWeight="900"
-        fontFamily="var(--font-brand-display), system-ui, sans-serif"
-        fill="#0a0a0a"
-        letterSpacing="-0.06em"
-      >
-        B
-      </text>
-    </svg>
+    />
   );
 }

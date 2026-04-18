@@ -5,13 +5,13 @@ export function BacardiWordmarkLockup({ text, className }: { text: string; class
   return (
     <span
       className={cn(
-        "bacardi-lockup-wordmark font-display font-extrabold uppercase tracking-tight transition-[filter] duration-200 will-change-[filter] group-hover:brightness-[1.2]",
+        "font-display font-extrabold uppercase tracking-tight text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.55)] transition-[filter] duration-200 will-change-[filter] group-hover:brightness-110",
         className,
       )}
     >
       {text}
       <sup
-        className="ml-0.5 align-super text-[0.45em] font-semibold tracking-normal text-neutral-500 no-underline"
+        className="ml-0.5 align-super text-[0.45em] font-semibold tracking-normal text-white/75 no-underline"
         aria-hidden
       >
         ®
