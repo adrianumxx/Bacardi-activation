@@ -56,9 +56,9 @@
     "pill": "Catalogue trimestriel · exigences claires · réserver après le choix",
     "heroLine1": "Réservez vos activations",
     "heroHighlight": "simplement et rapidement.",
-    "heroP": "Connectez-vous au portail, choisissez une activation dans le catalogue et consultez les exigences en temps réel. Le bouton Microsoft Bookings apparaît sur la page de détail lorsque vous êtes éligible.",
+    "heroP": "Ouvrez le catalogue public, choisissez une activation et lisez les exigences. Connectez-vous seulement pour l’éligibilité ou la réservation : le bouton Microsoft Bookings apparaît sur la fiche détail si vous êtes éligible.",
     "ctaEnterAuthed": "Ouvrir le catalogue activations",
-    "ctaEnterGuest": "Accéder au catalogue activations",
+    "ctaEnterGuest": "Ouvrir le catalogue activations",
     "ctaProfile": "Profil",
     "ctaDiscover": "Découvrir le parcours",
     "statsAccess": "Accès",
@@ -72,7 +72,7 @@
     "previewDesc": "Détail d’activation, décomposition des exigences et appel à l’action conditionné à l’éligibilité.",
     "previewEligibility": "Éligibilité point de vente",
     "previewLive": "En direct",
-    "previewCta": "Accéder au catalogue",
+    "previewCta": "Voir le catalogue",
     "previewDisclaimer": "Exemple illustratif de l’expérience dans le portail.",
     "previewFigureAria": "Aperçu illustratif : catalogue trimestriel, détail des exigences et indicateur d’éligibilité du point de vente.",
     "stepsTitle": "Trois étapes. Zéro ambiguïté.",
@@ -88,7 +88,7 @@
     "step3d": "Une fois éligible, réservez un créneau avec le référent via Microsoft Bookings depuis la fiche détail.",
     "footerBrand": "BACARDÍ · Belgique",
     "footerCopy": "Espace réservé au commerce autorisé : catalogue trimestriel, éligibilité transparente et accès aux référents. Support opérationnel : équipe Carda Bacardi Martini.",
-    "footerAccess": "Accès portail",
+    "footerAccess": "Connexion au portail",
     "footerConfig": "Configuration de l’environnement",
     "footerPurpose": "Do What Moves You™",
     "footerHeritage": "Depuis 1862 — authenticité, courage et intégrité dans notre façon de travailler, des Caraïbes à votre point de vente.",
@@ -117,7 +117,9 @@
     "support": "Problème d’accès ?",
     "supportBold": "Contactez l’équipe Carda Bacardi.",
     "backHome": "Retour à la présentation du portail",
-    "backBrand": "Retour à la présentation du portail"
+    "backBrand": "Retour à la présentation du portail",
+    "catalogTeaser": "Le catalogue trimestriel est public : vous pouvez parcourir les activations sans vous connecter.",
+    "catalogCta": "Ouvrir le catalogue activations"
   },
   "register": {
     "title": "Créer un compte",
@@ -182,9 +184,9 @@
     "todoTitle": "À corriger",
     "detailsCta": "Détails et réservation",
     "loadErrorTitle": "Erreur",
-    "loadErrorBody": "Impossible de charger les activations. Vérifiez la connexion Supabase et les variables d’environnement.",
+    "loadErrorBody": "Impossible de charger les activations. Vérifiez Supabase et les variables d’environnement ; la base doit inclure les migrations avec politiques RLS et droits de lecture anonyme sur les tables du catalogue.",
     "emptyTitle": "Aucune activation disponible",
-    "emptyBody": "Aucun catalogue actif pour cette période. Revenez plus tard ou contactez l’équipe Carda Bacardi."
+    "emptyBody": "Aucune activation n’est visible pour l’instant : vérifiez qu’un catalogue est actif avec des dates couvrant aujourd’hui, ou contactez l’équipe Carda Bacardi."
   },
   "publicActivations": {
     "ariaNav": "Catalogue activations",

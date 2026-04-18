@@ -56,9 +56,9 @@
     "pill": "Catalogo trimestrale · requisiti chiari · prenota dopo la scelta",
     "heroLine1": "Riserva le tue attivazioni",
     "heroHighlight": "in modo semplice e veloce.",
-    "heroP": "Accedi al portale, scegli l’attivazione dal catalogo e consulta i requisiti in tempo reale. Il pulsante Microsoft Bookings compare sulla pagina di dettaglio quando risulti idoneo.",
+    "heroP": "Apri il catalogo pubblico, scegli l’attivazione e leggi i requisiti. Accedi solo quando ti serve calcolare l’idoneità o prenotare: il pulsante Microsoft Bookings compare sul dettaglio se risulti idoneo.",
     "ctaEnterAuthed": "Apri il catalogo attivazioni",
-    "ctaEnterGuest": "Accedi al catalogo attivazioni",
+    "ctaEnterGuest": "Apri il catalogo attivazioni",
     "ctaProfile": "Profilo",
     "ctaDiscover": "Scopri il percorso",
     "statsAccess": "Accesso",
@@ -72,7 +72,7 @@
     "previewDesc": "Dettaglio attivazione, breakdown requisiti e call to action condizionata all’idoneità.",
     "previewEligibility": "Idoneità punto vendita",
     "previewLive": "Live",
-    "previewCta": "Accedi al catalogo",
+    "previewCta": "Vedi il catalogo",
     "previewDisclaimer": "Esempio a solo scopo illustrativo dell’esperienza nel portale.",
     "previewFigureAria": "Anteprima illustrativa: catalogo trimestre, dettaglio requisiti e indicatore di idoneità punto vendita.",
     "stepsTitle": "Tre passi. Zero ambiguità.",
@@ -88,7 +88,7 @@
     "step3d": "Se sei idoneo, sul dettaglio prenota lo slot con il referente tramite Microsoft Bookings.",
     "footerBrand": "BACARDÍ · Belgio",
     "footerCopy": "Piattaforma per il trade autorizzato: catalogo trimestrale, idoneità trasparente e collegamento ai referenti. Supporto operativo: team Carda Bacardi Martini.",
-    "footerAccess": "Accesso portale",
+    "footerAccess": "Accedi al portale",
     "footerConfig": "Configurazione ambiente",
     "footerPurpose": "Do What Moves You™",
     "footerHeritage": "Est. 1862 — autenticità, coraggio e integrità nel modo in cui lavoriamo, dal Caraibi al tuo punto vendita.",
@@ -117,7 +117,9 @@
     "support": "Problemi di accesso?",
     "supportBold": "Contatta il team Carda Bacardi.",
     "backHome": "Torna alla presentazione del portale",
-    "backBrand": "Torna alla presentazione del portale"
+    "backBrand": "Torna alla presentazione del portale",
+    "catalogTeaser": "Il catalogo trimestre è pubblico: puoi vedere le attivazioni senza accedere.",
+    "catalogCta": "Apri il catalogo attivazioni"
   },
   "register": {
     "title": "Crea un account",
@@ -182,9 +184,9 @@
     "todoTitle": "Da sistemare",
     "detailsCta": "Dettagli e prenotazione",
     "loadErrorTitle": "Errore",
-    "loadErrorBody": "Impossibile caricare le attivazioni. Verifica la connessione a Supabase e le variabili d’ambiente.",
+    "loadErrorBody": "Impossibile caricare le attivazioni. Verifica Supabase e le variabili d’ambiente; sul database devono essere applicate le migrazioni con policy e permessi di lettura per gli utenti non autenticati.",
     "emptyTitle": "Nessuna attivazione disponibile",
-    "emptyBody": "Non risulta un catalogo attivo per questo periodo. Torna più tardi o contatta il team Carda Bacardi."
+    "emptyBody": "Non risultano attivazioni visibili ora: controlla che esista un catalogo con stato attivo e date che includano oggi, oppure contatta il team Carda Bacardi."
   },
   "publicActivations": {
     "ariaNav": "Catalogo attivazioni",

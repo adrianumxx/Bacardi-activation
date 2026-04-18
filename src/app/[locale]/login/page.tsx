@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 import {
   loginWithPasswordAction,
@@ -48,6 +49,7 @@ export default async function LoginPage({
   const homeHref = localizedPath("/", locale);
   const configHref = localizedPath("/configurazione", locale);
   const registerHref = localizedPath("/register", locale);
+  const catalogHref = localizedPath("/activations", locale);
 
   const nextRaw = typeof searchParams?.next === "string" ? searchParams.next : null;
   const nextSafe = sanitizePostLoginRedirect(locale, nextRaw);
@@ -79,6 +81,20 @@ export default async function LoginPage({
             <p className="text-sm leading-relaxed text-muted-foreground">{L.subtitle}</p>
           </CardHeader>
           <CardContent className="space-y-6 pt-2">
+            <div className="rounded-xl border border-primary/25 bg-primary/[0.08] p-4">
+              <p className="text-sm leading-relaxed text-muted-foreground">{L.catalogTeaser}</p>
+              <Link
+                href={catalogHref}
+                className={cn(
+                  buttonVariants({ variant: "secondary", size: "sm" }),
+                  "mt-3 inline-flex h-10 w-full items-center justify-center gap-2 font-semibold no-underline sm:w-full",
+                )}
+              >
+                {L.catalogCta}
+                <ArrowRight className="size-4 opacity-90" aria-hidden />
+              </Link>
+            </div>
+
             {!configured ? (
               <SupabaseSetupCallout env={dict.supabaseEnv} kinds={supabaseIssueKinds}>
                 <p className="text-xs leading-relaxed text-muted-foreground">

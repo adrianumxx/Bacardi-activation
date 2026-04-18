@@ -79,6 +79,17 @@ export function BacardiLanding({ className, isAuthenticated, locale, dict }: Bac
           ) : (
             <>
               <Link
+                href={catalogHref}
+                className={buttonVariants({
+                  size: "sm",
+                  className:
+                    "min-h-10 gap-1.5 rounded-full px-4 font-semibold text-primary-foreground no-underline shadow-md shadow-primary/25 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                })}
+              >
+                {L.navCatalog}
+                <ArrowRight className="size-4 opacity-90" aria-hidden />
+              </Link>
+              <Link
                 href="#come-funziona"
                 className={buttonVariants({
                   variant: "ghost",
@@ -92,9 +103,10 @@ export function BacardiLanding({ className, isAuthenticated, locale, dict }: Bac
               <Link
                 href={loginHref}
                 className={buttonVariants({
+                  variant: "outline",
                   size: "sm",
                   className:
-                    "min-h-10 rounded-full px-4 font-semibold text-primary-foreground no-underline shadow-md shadow-primary/25 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                    "min-h-10 rounded-full border-white/20 bg-transparent px-4 font-semibold text-neutral-100 no-underline hover:bg-white/[0.06] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                 })}
               >
                 {L.navLogin}

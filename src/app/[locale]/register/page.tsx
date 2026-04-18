@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 import { registerWithPasswordAction } from "@/app/actions/auth-credentials";
 import { BacardiWordmarkLockup } from "@/components/brand/bacardi-wordmark-lockup";
@@ -41,6 +42,7 @@ export default async function RegisterPage({
   const homeHref = localizedPath("/", locale);
   const loginHref = localizedPath("/login", locale);
   const configHref = localizedPath("/configurazione", locale);
+  const catalogHref = localizedPath("/activations", locale);
 
   return (
     <div className="relative flex min-h-dvh flex-col text-foreground">
@@ -69,6 +71,20 @@ export default async function RegisterPage({
             <p className="text-sm leading-relaxed text-muted-foreground">{R.subtitle}</p>
           </CardHeader>
           <CardContent className="space-y-6 pt-2">
+            <div className="rounded-xl border border-primary/25 bg-primary/[0.08] p-4">
+              <p className="text-sm leading-relaxed text-muted-foreground">{L.catalogTeaser}</p>
+              <Link
+                href={catalogHref}
+                className={cn(
+                  buttonVariants({ variant: "secondary", size: "sm" }),
+                  "mt-3 inline-flex h-10 w-full items-center justify-center gap-2 font-semibold no-underline sm:w-full",
+                )}
+              >
+                {L.catalogCta}
+                <ArrowRight className="size-4 opacity-90" aria-hidden />
+              </Link>
+            </div>
+
             {!configured ? (
               <SupabaseSetupCallout env={dict.supabaseEnv} kinds={supabaseIssueKinds}>
                 <div className="flex flex-col gap-2 sm:flex-row sm:gap-3">

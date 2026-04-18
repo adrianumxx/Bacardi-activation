@@ -56,9 +56,9 @@
     "pill": "Quarterly catalogue · clear requirements · book after you choose",
     "heroLine1": "Reserve your activations",
     "heroHighlight": "in a simple, fast way.",
-    "heroP": "Sign in to the portal, pick an activation from the catalogue and review requirements in real time. The Microsoft Bookings button appears on the activation detail page when you are eligible.",
+    "heroP": "Open the public catalogue, pick an activation and read the requirements. Sign in only when you need eligibility or booking—the Microsoft Bookings button appears on the detail page when you are eligible.",
     "ctaEnterAuthed": "Open activation catalogue",
-    "ctaEnterGuest": "Sign in to activation catalogue",
+    "ctaEnterGuest": "Open activation catalogue",
     "ctaProfile": "Profile",
     "ctaDiscover": "Discover the journey",
     "statsAccess": "Access",
@@ -72,7 +72,7 @@
     "previewDesc": "Activation detail, requirement breakdown and eligibility-gated call to action.",
     "previewEligibility": "Outlet eligibility",
     "previewLive": "Live",
-    "previewCta": "Open catalogue",
+    "previewCta": "View catalogue",
     "previewDisclaimer": "Illustrative example of the portal experience.",
     "previewFigureAria": "Illustrative preview: quarterly catalogue, requirement details and outlet eligibility indicator.",
     "stepsTitle": "Three steps. Zero ambiguity.",
@@ -88,7 +88,7 @@
     "step3d": "When eligible, book your slot with the contact via Microsoft Bookings from the activation detail page.",
     "footerBrand": "BACARDÍ · Belgium",
     "footerCopy": "Workspace for authorised trade: quarterly catalogue, transparent eligibility and direct access to contacts. Operational support: Carda Bacardi Martini team.",
-    "footerAccess": "Portal access",
+    "footerAccess": "Sign in to portal",
     "footerConfig": "Environment configuration",
     "footerPurpose": "Do What Moves You™",
     "footerHeritage": "Est. 1862 — authenticity, courage and integrity in how we work, from the Caribbean to your outlet.",
@@ -117,7 +117,9 @@
     "support": "Access issues?",
     "supportBold": "Contact the Carda Bacardi team.",
     "backHome": "Back to the portal presentation",
-    "backBrand": "Back to the portal presentation"
+    "backBrand": "Back to the portal presentation",
+    "catalogTeaser": "The quarterly catalogue is public: you can browse activations without signing in.",
+    "catalogCta": "Open activation catalogue"
   },
   "register": {
     "title": "Create an account",
@@ -182,9 +184,9 @@
     "todoTitle": "To fix",
     "detailsCta": "Details and booking",
     "loadErrorTitle": "Error",
-    "loadErrorBody": "Could not load activations. Check the Supabase connection and environment variables.",
+    "loadErrorBody": "Could not load activations. Check Supabase and env vars; the database must include migrations with RLS policies and anonymous read grants on the catalogue tables.",
     "emptyTitle": "No activations available",
-    "emptyBody": "No active catalogue for this period. Try again later or contact the Carda Bacardi team."
+    "emptyBody": "No activations are visible right now: ensure a catalogue is active with dates that include today, or contact the Carda Bacardi team."
   },
   "publicActivations": {
     "ariaNav": "Activation catalogue",

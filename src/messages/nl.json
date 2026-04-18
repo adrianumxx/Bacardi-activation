@@ -56,9 +56,9 @@
     "pill": "Kwartaalcatalogus · duidelijke vereisten · boeken na uw keuze",
     "heroLine1": "Reserveer uw activaties",
     "heroHighlight": "eenvoudig en snel.",
-    "heroP": "Meld u aan bij het portaal, kies een activatie uit de catalogus en bekijk de vereisten live. De knop Microsoft Bookings verschijnt op de detailpagina wanneer u geschikt bent.",
+    "heroP": "Open de openbare catalogus, kies een activatie en lees de vereisten. Meld u alleen aan voor geschiktheid of boeken: de knop Microsoft Bookings verschijnt op de detailpagina als u geschikt bent.",
     "ctaEnterAuthed": "Open activatiecatalogus",
-    "ctaEnterGuest": "Aanmelden bij activatiecatalogus",
+    "ctaEnterGuest": "Open activatiecatalogus",
     "ctaProfile": "Profiel",
     "ctaDiscover": "Ontdek het traject",
     "statsAccess": "Toegang",
@@ -72,7 +72,7 @@
     "previewDesc": "Activatiedetail, vereisten-opbouw en oproep tot actie afhankelijk van geschiktheid.",
     "previewEligibility": "Geschiktheid verkooppunt",
     "previewLive": "Live",
-    "previewCta": "Ga naar catalogus",
+    "previewCta": "Bekijk catalogus",
     "previewDisclaimer": "Illustratief voorbeeld van de portalervaring.",
     "previewFigureAria": "Illustratieve preview: kwartaalcatalogus, vereistendetails en indicator geschiktheid verkooppunt.",
     "stepsTitle": "Drie stappen. Geen dubbelzinnigheid.",
@@ -88,7 +88,7 @@
     "step3d": "Als u geschikt bent, boek via Microsoft Bookings op de detailpagina een slot met uw referent.",
     "footerBrand": "BACARDÍ · België",
     "footerCopy": "Werkruimte voor geautoriseerde handel: kwartaalcatalogus, transparante geschiktheid en directe toegang tot referenten. Operationele support: team Carda Bacardi Martini.",
-    "footerAccess": "Portaaltoegang",
+    "footerAccess": "Inloggen op portaal",
     "footerConfig": "Omgevingsconfiguratie",
     "footerPurpose": "Do What Moves You™",
     "footerHeritage": "Sinds 1862 — authenticiteit, moed en integriteit in hoe we werken, van de Caraïben tot uw verkooppunt.",
@@ -117,7 +117,9 @@
     "support": "Problemen met inloggen?",
     "supportBold": "Neem contact op met het Carda Bacardi-team.",
     "backHome": "Terug naar de portalpresentatie",
-    "backBrand": "Terug naar de portalpresentatie"
+    "backBrand": "Terug naar de portalpresentatie",
+    "catalogTeaser": "De kwartaalcatalogus is openbaar: u kunt activaties bekijken zonder in te loggen.",
+    "catalogCta": "Open activatiecatalogus"
   },
   "register": {
     "title": "Account aanmaken",
@@ -182,9 +184,9 @@
     "todoTitle": "Aan te passen",
     "detailsCta": "Details en boeking",
     "loadErrorTitle": "Fout",
-    "loadErrorBody": "Kan activaties niet laden. Controleer de Supabase-verbinding en omgevingsvariabelen.",
+    "loadErrorBody": "Kan activaties niet laden. Controleer Supabase en omgevingsvariabelen; de database moet migraties bevatten met RLS-beleid en anonieme leesrechten op de catalogustabellen.",
     "emptyTitle": "Geen activaties beschikbaar",
-    "emptyBody": "Geen actieve catalogus voor deze periode. Probeer later opnieuw of neem contact op met het Carda Bacardi-team."
+    "emptyBody": "Er zijn nu geen zichtbare activaties: controleer of er een actieve catalogus is met datums die vandaag omvatten, of neem contact op met het Carda Bacardi-team."
   },
   "publicActivations": {
     "ariaNav": "Activatiecatalogus",
