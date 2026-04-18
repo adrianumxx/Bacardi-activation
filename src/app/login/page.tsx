@@ -12,7 +12,17 @@ export default async function LoginPage({
   searchParams?: Record<string, string | string[] | undefined>;
 }) {
   const sent = searchParams?.sent === "1";
-  const error = typeof searchParams?.error === "string" ? searchParams.error : null;
+  const errorRaw = typeof searchParams?.error === "string" ? searchParams.error : null;
+  const error =
+    errorRaw && errorRaw !== "auth"
+      ? (() => {
+          try {
+            return decodeURIComponent(errorRaw);
+          } catch {
+            return errorRaw;
+          }
+        })()
+      : errorRaw;
 
   return (
     <div className="mx-auto flex min-h-screen min-h-dvh max-w-md flex-col justify-center bg-background px-4 py-10 text-foreground">
@@ -33,6 +43,9 @@ export default async function LoginPage({
             <p className="text-sm text-destructive">
               Autenticazione non riuscita. Riprova dal link email o richiedi un nuovo accesso.
             </p>
+          ) : null}
+          {error && error !== "auth" ? (
+            <p className="text-sm text-destructive">{error}</p>
           ) : null}
 
           <form className="space-y-4" action={loginAction}>
