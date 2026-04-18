@@ -47,18 +47,6 @@ export default async function AdminLayout({
               className="hidden items-center gap-3 text-sm text-neutral-300 sm:flex"
               aria-label="Sezioni admin"
             >
-              <a
-                href={DEFAULT_BOOKINGS_PAGE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={cn(
-                  buttonVariants({ size: "sm" }),
-                  "h-8 gap-1 px-2.5 text-xs font-semibold text-primary-foreground no-underline shadow-sm shadow-primary/20",
-                )}
-              >
-                {portalNav.navBookings}
-                <ExternalLink className="size-3 opacity-90" aria-hidden />
-              </a>
               <Link
                 className="rounded-sm font-medium text-neutral-200 transition-colors hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
                 href={localizedPath("/admin/catalogs", locale)}
@@ -73,10 +61,23 @@ export default async function AdminLayout({
               </Link>
               <Link
                 className="rounded-sm font-medium text-neutral-200 transition-colors hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
-                href={localizedPath("/portal", locale)}
+                href={localizedPath("/activations", locale)}
               >
                 {nav.clientView}
               </Link>
+              <a
+                href={DEFAULT_BOOKINGS_PAGE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  buttonVariants({ size: "sm", variant: "outline" }),
+                  "h-8 gap-1 border-primary/35 px-2.5 text-xs font-medium text-foreground no-underline hover:bg-primary/10",
+                )}
+                aria-label={portalNav.bookingsAria}
+              >
+                {portalNav.navBookings}
+                <ExternalLink className="size-3 opacity-90" aria-hidden />
+              </a>
             </nav>
           </div>
           <div className="flex shrink-0 items-center gap-2">
@@ -87,7 +88,7 @@ export default async function AdminLayout({
                 size: "sm",
                 className: "min-h-9 shrink-0",
               })}
-              href={localizedPath("/portal", locale)}
+              href={localizedPath("/activations", locale)}
             >
               {nav.exit}
             </Link>

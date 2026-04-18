@@ -37,9 +37,9 @@ export async function GET(request: NextRequest) {
 
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
-  const nextRaw = url.searchParams.get("next") ?? "/portal";
+  const nextRaw = url.searchParams.get("next") ?? "/activations";
   const nextClean =
-    nextRaw.startsWith("/") && !nextRaw.startsWith("//") ? nextRaw : "/portal";
+    nextRaw.startsWith("/") && !nextRaw.startsWith("//") ? nextRaw : "/activations";
   const next = withLocalePrefix(nextClean);
 
   if (!code) {

@@ -15,5 +15,5 @@ export async function signOut() {
       /* session già assente o cookie non scrivibili */
     }
   }
-  redirect(localizedPath("/login", getLocale()));
+  redirect(localizedPath("/activations", getLocale()));
 }

@@ -40,6 +40,6 @@ export async function requireAdmin() {
   const user = await requireUser();
   const profile = await getProfileForUser(user.id);
   const locale = await getLocale();
-  if (profile?.role !== "admin") redirect(localizedPath("/portal", locale));
+  if (profile?.role !== "admin") redirect(localizedPath("/activations", locale));
   return { user, profile, role: profile.role as UserRole };
 }

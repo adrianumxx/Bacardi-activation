@@ -11,7 +11,7 @@ import { createServiceRoleClient } from "@/lib/supabase/service";
 export async function inviteClientByEmail(email: string) {
   await requireAdmin();
   const locale = getLocale();
-  const next = encodeURIComponent(localePath(locale, "/portal"));
+  const next = encodeURIComponent(localePath(locale, "/activations"));
 
   const trimmed = email.trim().toLowerCase();
   if (!trimmed.includes("@")) {

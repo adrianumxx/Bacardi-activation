@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, CalendarClock, ClipboardCheck, ExternalLink, Sparkles } from "lucide-react";
+import { ArrowRight, CalendarClock, ClipboardCheck, Sparkles } from "lucide-react";
 
 import { BacardiMark } from "@/components/brand/bacardi-mark";
 import { BacardiWordmarkLockup } from "@/components/brand/bacardi-wordmark-lockup";
@@ -9,7 +9,6 @@ import { MarketingBackdrop } from "@/components/landing/marketing-backdrop";
 import { buttonVariants } from "@/components/ui/button";
 import type { AppLocale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/get-dictionary";
-import { DEFAULT_BOOKINGS_PAGE_URL } from "@/lib/bookings-default";
 import { localePath } from "@/lib/i18n/paths";
 import { cn } from "@/lib/utils";
 
@@ -23,7 +22,7 @@ type BacardiLandingProps = {
 export function BacardiLanding({ className, isAuthenticated, locale, dict }: BacardiLandingProps) {
   const L = dict.landing;
   const homeHref = localePath(locale, "/");
-  const portalHref = localePath(locale, "/portal");
+  const catalogHref = localePath(locale, "/activations");
   const loginHref = localePath(locale, "/login");
   const profileHref = localePath(locale, "/portal/profile");
   const configHref = localePath(locale, "/configurazione");
@@ -65,32 +64,17 @@ export function BacardiLanding({ className, isAuthenticated, locale, dict }: Bac
         <div className="flex w-full flex-col gap-3 sm:w-auto sm:max-w-[min(100%,28rem)] sm:items-end">
           <LocaleDashSwitcher locale={locale} copy={dict.localeSwitcher} variant="landing" />
           <nav className="flex flex-wrap items-center justify-end gap-2 text-sm" aria-label="Navigazione principale">
-          <a
-            href={DEFAULT_BOOKINGS_PAGE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={buttonVariants({
-              size: "sm",
-              className:
-                "min-h-10 gap-1.5 rounded-full px-4 font-semibold text-primary-foreground no-underline shadow-md shadow-primary/25 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-            })}
-          >
-            <CalendarClock className="size-3.5 shrink-0 opacity-95" aria-hidden />
-            {L.navBookings}
-            <ExternalLink className="size-3.5 shrink-0 opacity-90" aria-hidden />
-          </a>
           {isAuthenticated ? (
             <Link
-              href={portalHref}
+              href={catalogHref}
               className={buttonVariants({
-                variant: "outline",
                 size: "sm",
                 className:
-                  "min-h-10 gap-1.5 rounded-full border-primary/35 bg-transparent px-4 text-foreground no-underline hover:border-primary hover:bg-primary/10 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                  "min-h-10 gap-1.5 rounded-full px-4 font-semibold text-primary-foreground no-underline shadow-md shadow-primary/25 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
               })}
             >
               {L.navCatalog}
-              <ArrowRight className="size-4 opacity-80" aria-hidden />
+              <ArrowRight className="size-4 opacity-90" aria-hidden />
             </Link>
           ) : (
             <>
@@ -108,10 +92,9 @@ export function BacardiLanding({ className, isAuthenticated, locale, dict }: Bac
               <Link
                 href={loginHref}
                 className={buttonVariants({
-                  variant: "outline",
                   size: "sm",
                   className:
-                    "min-h-10 rounded-full border-primary/35 bg-transparent px-4 text-foreground no-underline hover:border-primary hover:bg-primary/10 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                    "min-h-10 rounded-full px-4 font-semibold text-primary-foreground no-underline shadow-md shadow-primary/25 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                 })}
               >
                 {L.navLogin}
@@ -167,27 +150,12 @@ export function BacardiLanding({ className, isAuthenticated, locale, dict }: Bac
                 "opacity-100 motion-safe:animate-landing-in motion-safe:opacity-0 motion-safe:[animation-delay:300ms]",
               )}
             >
-              <a
-                href={DEFAULT_BOOKINGS_PAGE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href={catalogHref}
                 className={buttonVariants({
                   size: "lg",
                   className:
                     "min-h-12 gap-2 rounded-full px-8 text-base font-semibold text-primary-foreground no-underline shadow-lg shadow-primary/35 transition-[transform,box-shadow] hover:shadow-xl hover:shadow-primary/30 motion-safe:active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-                })}
-              >
-                <CalendarClock className="size-5 shrink-0 opacity-95" aria-hidden />
-                {L.ctaBookings}
-                <ExternalLink className="size-4 shrink-0 opacity-95" aria-hidden />
-              </a>
-              <Link
-                href={isAuthenticated ? portalHref : loginHref}
-                className={buttonVariants({
-                  variant: "outline",
-                  size: "lg",
-                  className:
-                    "min-h-12 gap-2 rounded-full border-primary/45 bg-transparent px-8 text-base font-semibold no-underline hover:border-primary hover:bg-primary/10 motion-safe:active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                 })}
               >
                 {isAuthenticated ? L.ctaEnterAuthed : L.ctaEnterGuest}
@@ -227,9 +195,9 @@ export function BacardiLanding({ className, isAuthenticated, locale, dict }: Bac
             >
               <div className="sm:border-l sm:border-border/60 sm:pl-6 first:sm:border-l-0 first:sm:pl-0">
                 <dt className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
-                  {L.statsBook}
+                  {L.statsAccess}
                 </dt>
-                <dd className="mt-1.5 font-medium leading-snug text-neutral-100">{L.statsBookVal}</dd>
+                <dd className="mt-1.5 font-medium leading-snug text-neutral-100">{L.statsAccessVal}</dd>
               </div>
               <div className="sm:border-l sm:border-border/60 sm:pl-6">
                 <dt className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
@@ -239,9 +207,9 @@ export function BacardiLanding({ className, isAuthenticated, locale, dict }: Bac
               </div>
               <div className="sm:border-l sm:border-border/60 sm:pl-6">
                 <dt className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
-                  {L.statsAccess}
+                  {L.statsBook}
                 </dt>
-                <dd className="mt-1.5 font-medium leading-snug text-neutral-100">{L.statsAccessVal}</dd>
+                <dd className="mt-1.5 font-medium leading-snug text-neutral-100">{L.statsBookVal}</dd>
               </div>
             </dl>
           </div>
@@ -283,15 +251,17 @@ export function BacardiLanding({ className, isAuthenticated, locale, dict }: Bac
                 >
                   <div className="h-full w-[72%] rounded-full bg-primary" />
                 </div>
-                <a
-                  href={DEFAULT_BOOKINGS_PAGE_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-primary py-2.5 text-center text-xs font-bold uppercase tracking-wide text-primary-foreground no-underline transition-opacity hover:opacity-90"
+                <Link
+                  href={catalogHref}
+                  className={buttonVariants({
+                    size: "default",
+                    className:
+                      "inline-flex h-10 w-full items-center justify-center gap-2 rounded-lg text-xs font-bold uppercase tracking-wide no-underline",
+                  })}
                 >
-                  {L.previewOpen}
-                  <ExternalLink className="size-3.5" aria-hidden />
-                </a>
+                  {L.previewCta}
+                  <ArrowRight className="size-3.5 opacity-90" aria-hidden />
+                </Link>
               </div>
             </figure>
             <div
@@ -415,14 +385,6 @@ export function BacardiLanding({ className, isAuthenticated, locale, dict }: Bac
             <p className="mt-2 text-[0.58rem] leading-relaxed text-muted-foreground/65 sm:max-w-xl">{L.footerLegal}</p>
           </div>
           <nav className="flex flex-col gap-3 text-sm sm:items-end" aria-label="Link di servizio">
-            <a
-              href={DEFAULT_BOOKINGS_PAGE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-fit rounded-sm font-medium text-primary underline-offset-4 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-            >
-              {L.footerBookings}
-            </a>
             <Link
               className="w-fit rounded-sm text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               href={loginHref}

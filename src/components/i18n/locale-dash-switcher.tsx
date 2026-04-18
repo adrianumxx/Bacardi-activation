@@ -11,17 +11,17 @@ import { cn } from "@/lib/utils";
 type Copy = Dictionary["localeSwitcher"];
 
 const TIP_KEYS: Record<AppLocale, keyof Copy> = {
-  it: "tipIt",
-  en: "tipEn",
   fr: "tipFr",
   nl: "tipNl",
+  en: "tipEn",
+  it: "tipIt",
 };
 
 const LABEL_KEYS: Record<AppLocale, keyof Copy> = {
-  it: "it",
-  en: "en",
   fr: "fr",
   nl: "nl",
+  en: "en",
+  it: "it",
 };
 
 export function LocaleDashSwitcher({

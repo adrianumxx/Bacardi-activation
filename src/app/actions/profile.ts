@@ -73,7 +73,7 @@ export async function updateClientProfile(formData: FormData) {
 
   if (aErr) return { ok: false as const, error: "Salvataggio attributi fallito." };
 
-  revalidateAppPath("/portal");
+  revalidateAppPath("/activations");
   revalidateAppPath("/portal/profile");
   return { ok: true as const };
 }

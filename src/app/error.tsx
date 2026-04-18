@@ -11,7 +11,7 @@ import it from "@/messages/it.json";
 import nl from "@/messages/nl.json";
 import { localePath } from "@/lib/i18n/paths";
 
-const dicts: Record<AppLocale, typeof it> = { it, en, fr, nl };
+const dicts: Record<AppLocale, typeof it> = { fr, nl, en, it };
 
 function localeFromPathname(pathname: string | null): AppLocale {
   if (!pathname) return DEFAULT_LOCALE;

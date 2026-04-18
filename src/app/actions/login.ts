@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 
 import { getDictionary } from "@/i18n/get-dictionary";
 import { isSupabaseConfigured, siteUrl } from "@/lib/env";
+import { sanitizePostLoginRedirect } from "@/lib/auth/post-login-redirect";
 import { getLocale, localizedPath } from "@/lib/i18n/server";
 import { createClient } from "@/lib/supabase/server";
 
@@ -26,12 +27,12 @@ export async function sendMagicLink(formData: FormData) {
 
   try {
     const supabase = await createClient();
+    const nextRaw = String(formData.get("next") ?? "").trim();
+    const nextPath = sanitizePostLoginRedirect(locale, nextRaw || null);
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: `${siteUrl()}/auth/callback?next=${encodeURIComponent(
-          localizedPath("/portal", locale),
-        )}`,
+        emailRedirectTo: `${siteUrl()}/auth/callback?next=${encodeURIComponent(nextPath)}`,
       },
     });
 

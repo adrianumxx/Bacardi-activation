@@ -7,20 +7,17 @@ import { LocaleDashSwitcher } from "@/components/i18n/locale-dash-switcher";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { getDictionary } from "@/i18n/get-dictionary";
-import { requireUser, getProfileForUser } from "@/lib/auth/session";
+import { getOptionalUser, getProfileForUser } from "@/lib/auth/session";
 import { getLocale, localizedPath } from "@/lib/i18n/server";
 import { cn } from "@/lib/utils";
 
-export default async function PortalShellLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function ActivationsCatalogLayout({ children }: { children: React.ReactNode }) {
   const locale = getLocale();
   const dict = await getDictionary(locale);
   const nav = dict.portalLayout;
-  const user = await requireUser();
-  const profile = await getProfileForUser(user.id);
+  const L = dict.landing;
+  const user = await getOptionalUser();
+  const profile = user ? await getProfileForUser(user.id) : null;
 
   return (
     <div className="min-h-dvh">
@@ -43,7 +40,7 @@ export default async function PortalShellLayout({
             <Separator orientation="vertical" className="hidden h-9 sm:block" />
             <nav
               className="hidden min-w-0 items-center gap-2 text-sm text-neutral-300 md:flex md:gap-3"
-              aria-label="Sezioni portale"
+              aria-label={dict.publicActivations.ariaNav}
             >
               <Link
                 className={cn(
@@ -54,12 +51,24 @@ export default async function PortalShellLayout({
               >
                 {nav.navCatalog}
               </Link>
-              <Link
-                className="rounded-sm whitespace-nowrap font-medium text-neutral-200 transition-colors hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
-                href={localizedPath("/portal/profile", locale)}
-              >
-                {nav.navProfile}
-              </Link>
+              {user ? (
+                <Link
+                  className="rounded-sm whitespace-nowrap font-medium text-neutral-200 transition-colors hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+                  href={localizedPath("/portal/profile", locale)}
+                >
+                  {nav.navProfile}
+                </Link>
+              ) : (
+                <Link
+                  className={cn(
+                    buttonVariants({ size: "sm" }),
+                    "h-8 whitespace-nowrap px-3 text-xs font-semibold text-primary-foreground no-underline shadow-sm shadow-primary/20",
+                  )}
+                  href={localizedPath("/login", locale)}
+                >
+                  {L.navLogin}
+                </Link>
+              )}
               {profile?.role === "admin" ? (
                 <Link
                   className="rounded-sm whitespace-nowrap transition-colors hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
@@ -72,17 +81,31 @@ export default async function PortalShellLayout({
           </div>
           <div className="flex shrink-0 items-center gap-2">
             <LocaleDashSwitcher locale={locale} copy={dict.localeSwitcher} variant="compact" />
-            <div className="hidden max-w-[220px] text-right text-xs text-muted-foreground lg:block">
-              <div className="truncate font-medium text-foreground">
-                {profile?.company_name?.trim() || nav.fallbackClientName}
-              </div>
-              <div className="truncate">{user.email}</div>
-            </div>
-            <form action={signOut}>
-              <Button type="submit" variant="outline" size="sm" className="min-h-9">
-                {nav.signOut}
-              </Button>
-            </form>
+            {user ? (
+              <>
+                <div className="hidden max-w-[200px] text-right text-xs text-muted-foreground lg:block">
+                  <div className="truncate font-medium text-foreground">
+                    {profile?.company_name?.trim() || nav.fallbackClientName}
+                  </div>
+                  <div className="truncate">{user.email}</div>
+                </div>
+                <form action={signOut}>
+                  <Button type="submit" variant="outline" size="sm" className="min-h-9">
+                    {nav.signOut}
+                  </Button>
+                </form>
+              </>
+            ) : (
+              <Link
+                href={localizedPath("/login", locale)}
+                className={cn(
+                  buttonVariants({ size: "sm", variant: "outline" }),
+                  "min-h-9 md:hidden",
+                )}
+              >
+                {L.navLogin}
+              </Link>
+            )}
           </div>
         </div>
       </header>

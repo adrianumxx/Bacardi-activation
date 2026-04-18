@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 
 import { getDictionary } from "@/i18n/get-dictionary";
 import { isSupabaseConfigured, siteUrl } from "@/lib/env";
+import { sanitizePostLoginRedirect } from "@/lib/auth/post-login-redirect";
 import { getLocale, localizedPath } from "@/lib/i18n/server";
 import { localePath } from "@/lib/i18n/paths";
 import { createClient } from "@/lib/supabase/server";
@@ -40,15 +41,18 @@ export async function loginWithPasswordAction(formData: FormData) {
   const supabase = await requireSupabaseForAuth();
   const { error } = await supabase.auth.signInWithPassword({ email, password });
   if (error) redirectLoginError(error.message);
-  redirect(localizedPath("/portal", locale));
+  const nextRaw = String(formData.get("next") ?? "").trim();
+  redirect(sanitizePostLoginRedirect(locale, nextRaw || null));
 }
 
-export async function signInWithGoogleAction() {
+export async function signInWithGoogleAction(formData: FormData) {
   const dict = await getDictionary(getLocale());
   const locale = getLocale();
   const supabase = await requireSupabaseForAuth();
   const origin = siteUrl();
-  const next = encodeURIComponent(localePath(locale, "/portal"));
+  const nextRaw = String(formData.get("next") ?? "").trim();
+  const nextPath = sanitizePostLoginRedirect(locale, nextRaw || null);
+  const next = encodeURIComponent(nextPath);
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
@@ -82,7 +86,7 @@ export async function registerWithPasswordAction(formData: FormData) {
   }
 
   const supabase = await createClient();
-  const next = encodeURIComponent(localePath(locale, "/portal"));
+  const next = encodeURIComponent(localePath(locale, "/activations"));
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
@@ -92,6 +96,6 @@ export async function registerWithPasswordAction(formData: FormData) {
   });
 
   if (error) redirectRegisterError(error.message);
-  if (data.session) redirect(localizedPath("/portal", locale));
+  if (data.session) redirect(localizedPath("/activations", locale));
   redirect(localizedPath("/login?registered=1", locale));
 }

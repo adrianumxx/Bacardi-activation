@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SupabaseSetupCallout } from "@/components/env/supabase-setup-callout";
 import { getDictionary } from "@/i18n/get-dictionary";
+import { sanitizePostLoginRedirect } from "@/lib/auth/post-login-redirect";
 import { getSupabaseEnvIssueKinds, isSupabaseConfigured } from "@/lib/env";
 import { getLocale, localizedPath } from "@/lib/i18n/server";
 import { cn } from "@/lib/utils";
@@ -47,6 +48,9 @@ export default async function LoginPage({
   const homeHref = localizedPath("/", locale);
   const configHref = localizedPath("/configurazione", locale);
   const registerHref = localizedPath("/register", locale);
+
+  const nextRaw = typeof searchParams?.next === "string" ? searchParams.next : null;
+  const nextSafe = sanitizePostLoginRedirect(locale, nextRaw);
 
   return (
     <div className="relative flex min-h-dvh flex-col text-foreground">
@@ -124,6 +128,7 @@ export default async function LoginPage({
             {configured ? (
               <>
                 <form action={signInWithGoogleAction}>
+                  <input type="hidden" name="next" value={nextSafe} />
                   <Button type="submit" variant="outline" className="h-11 w-full text-base font-semibold">
                     {L.googleCta}
                   </Button>
@@ -139,6 +144,7 @@ export default async function LoginPage({
                 </div>
 
                 <form action={loginWithPasswordAction} className="space-y-4">
+                  <input type="hidden" name="next" value={nextSafe} />
                   <div className="space-y-2">
                     <Label htmlFor="email" className="text-foreground">
                       {L.email}
@@ -190,6 +196,7 @@ export default async function LoginPage({
                   </summary>
                   <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{L.magicHelp}</p>
                   <form action={loginMagicLinkAction} className="mt-3 space-y-3">
+                    <input type="hidden" name="next" value={nextSafe} />
                     <Input
                       name="email"
                       type="email"

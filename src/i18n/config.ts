@@ -1,9 +1,10 @@
-export const LOCALES = ["it", "en", "fr", "nl"] as const;
+/** Ordine prioritario: FR → NL → EN → IT (switcher, static params, hreflang). */
+export const LOCALES = ["fr", "nl", "en", "it"] as const;
 
 export type AppLocale = (typeof LOCALES)[number];
 
-/** Mercato di default: Belgio (NL). */
-export const DEFAULT_LOCALE: AppLocale = "nl";
+/** Lingua predefinita URL senza prefisso (redirect middleware). */
+export const DEFAULT_LOCALE: AppLocale = "fr";
 
 export function isAppLocale(value: string | undefined | null): value is AppLocale {
   return Boolean(value && LOCALES.includes(value as AppLocale));
@@ -11,8 +12,8 @@ export function isAppLocale(value: string | undefined | null): value is AppLocal
 
 /** Open Graph / html lang BCP 47 */
 export const OG_LOCALE: Record<AppLocale, string> = {
-  it: "it_IT",
-  en: "en_BE",
   fr: "fr_BE",
   nl: "nl_BE",
+  en: "en_BE",
+  it: "it_IT",
 };

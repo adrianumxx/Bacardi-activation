@@ -52,7 +52,7 @@ export async function createActivation(catalogId: string, formData: FormData) {
   if (error || !data) return { ok: false as const, error: error?.message ?? "Errore DB." };
 
   revalidateAppPath(`/admin/catalogs/${catalogId}`);
-  revalidateAppPath("/portal");
+  revalidateAppPath("/activations");
   return { ok: true as const, id: data.id };
 }
 
@@ -103,8 +103,8 @@ export async function updateActivation(
   if (error) return { ok: false as const, error: error.message };
 
   revalidateAppPath(`/admin/catalogs/${catalogId}`);
-  revalidateAppPath("/portal");
-  revalidateAppPath(`/portal/activations/${activationId}`);
+  revalidateAppPath("/activations");
+  revalidateAppPath(`/activations/${activationId}`);
   return { ok: true as const };
 }
 
@@ -120,7 +120,7 @@ export async function deleteActivation(catalogId: string, activationId: string) 
   if (error) return { ok: false as const, error: error.message };
 
   revalidateAppPath(`/admin/catalogs/${catalogId}`);
-  revalidateAppPath("/portal");
+  revalidateAppPath("/activations");
   return { ok: true as const };
 }
 
