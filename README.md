@@ -9,6 +9,16 @@ Mini portale B2B per clienti: catalogo trimestrale, requisiti e idoneità, uscit
 - Supabase (Auth magic link + Postgres + RLS)
 - Zod (validazione runtime)
 
+## Deploy (Vercel)
+
+In **Project → Settings → Environment Variables** aggiungi almeno:
+
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `NEXT_PUBLIC_SITE_URL` (es. `https://tuo-progetto.vercel.app`)
+
+Poi fai **Redeploy**. Se mancano, l’app reindirizza a `/configurazione` invece di mostrare l’errore generico.
+
 ## Setup locale
 
 1. Crea un progetto su [Supabase](https://supabase.com) ed esegui la migrazione SQL in `supabase/migrations/20250418000000_init.sql` (SQL editor o CLI Supabase).

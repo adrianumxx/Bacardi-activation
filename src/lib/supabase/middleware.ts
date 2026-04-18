@@ -2,15 +2,19 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import type { Database } from "@/types/database";
 
-import { getPublicEnv } from "@/lib/env";
+import { getPublicEnvSafe } from "@/lib/env";
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
   });
 
-  const { NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY } =
-    getPublicEnv();
+  const env = getPublicEnvSafe();
+  if (!env) {
+    return supabaseResponse;
+  }
+
+  const { NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY } = env;
 
   const supabase = createServerClient<Database>(
     NEXT_PUBLIC_SUPABASE_URL,

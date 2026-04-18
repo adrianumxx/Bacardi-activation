@@ -2,12 +2,15 @@ import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import type { Database } from "@/types/database";
 
-import { getPublicEnv } from "@/lib/env";
+import { getPublicEnvSafe } from "@/lib/env";
 
 export async function createClient() {
   const cookieStore = await cookies();
-  const { NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY } =
-    getPublicEnv();
+  const env = getPublicEnvSafe();
+  if (!env) {
+    throw new Error("Supabase non configurato (variabili NEXT_PUBLIC_* mancanti).");
+  }
+  const { NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY } = env;
 
   return createServerClient<Database>(
     NEXT_PUBLIC_SUPABASE_URL,

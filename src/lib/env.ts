@@ -8,12 +8,28 @@ const publicEnvSchema = z.object({
 
 export type PublicEnv = z.infer<typeof publicEnvSchema>;
 
-export function getPublicEnv(): PublicEnv {
-  return publicEnvSchema.parse({
-    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
-    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
+/** Non lancia: utile in middleware e nella home per evitare 500 se mancano le env in produzione. */
+export function getPublicEnvSafe(): PublicEnv | null {
+  const parsed = publicEnvSchema.safeParse({
+    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL?.trim(),
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim(),
+    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL?.trim() || undefined,
   });
+  return parsed.success ? parsed.data : null;
+}
+
+export function isSupabaseConfigured(): boolean {
+  return getPublicEnvSafe() !== null;
+}
+
+export function getPublicEnv(): PublicEnv {
+  const env = getPublicEnvSafe();
+  if (!env) {
+    throw new Error(
+      "Variabili Supabase mancanti o non valide. Imposta NEXT_PUBLIC_SUPABASE_URL e NEXT_PUBLIC_SUPABASE_ANON_KEY (es. in Vercel → Project → Settings → Environment Variables) e ridistribuisci.",
+    );
+  }
+  return env;
 }
 
 const serviceEnvSchema = publicEnvSchema.extend({
