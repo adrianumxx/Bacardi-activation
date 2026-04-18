@@ -5,9 +5,8 @@ export default function ConfigurazionePage() {
     <div className="mx-auto max-w-xl px-4 py-16 text-foreground">
       <h1 className="text-2xl font-semibold tracking-tight">Configurazione Supabase mancante</h1>
       <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-        L’app non trova le variabili d’ambiente pubbliche di Supabase. Senza di esse non è possibile
-        autenticarsi né leggere il database: in produzione compare l’errore generico “Application
-        error”.
+        Le variabili pubbliche di Supabase non risultano valide lato server (Node). Senza di esse non
+        è possibile autenticarsi né leggere il database.
       </p>
 
       <h2 className="mt-8 text-sm font-semibold uppercase tracking-wide text-muted-foreground">

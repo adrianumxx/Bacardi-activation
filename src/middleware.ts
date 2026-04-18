@@ -1,20 +1,13 @@
 import { type NextRequest, NextResponse } from "next/server";
 
-import { isSupabaseConfigured } from "@/lib/env";
 import { updateSession } from "@/lib/supabase/middleware";
 
+/**
+ * Non controlliamo qui le env Supabase: su Vercel il middleware gira su **Edge** e a volte
+ * `process.env.NEXT_PUBLIC_*` non coincide con il runtime Node → redirect infinito a /configurazione.
+ * La sessione viene aggiornata solo se le env ci sono (vedi `updateSession`).
+ */
 export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
-
-  if (!isSupabaseConfigured()) {
-    if (!pathname.startsWith("/configurazione")) {
-      const url = request.nextUrl.clone();
-      url.pathname = "/configurazione";
-      return NextResponse.redirect(url);
-    }
-    return NextResponse.next();
-  }
-
   try {
     return await updateSession(request);
   } catch {
